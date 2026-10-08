@@ -5,12 +5,12 @@ import { Plus, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const faqs = [
-  "How long does delivery take?",
-  "Which bulb and colour temperature should I use?",
-  "Can you help me plan the lighting for a whole room?",
-  "Do the lamps come ready to install?",
-  "What is your returns and warranty policy?",
-  "Do you ship internationally?"
+  "Çatdırılma nə qədər vaxt aparır?",
+  "Xüsusi sifariş qəbul edirsinizmi?",
+  "Otağımın ölçülərinə uyğun mebel seçiminə kömək edirsiniz?",
+  "Mebellər quraşdırılmış şəkildə gəlir?",
+  "Geri qaytarma və zəmanət siyasətiniz necədir?",
+  "Beynəlxalq çatdırılma mövcuddurmu?"
 ];
 
 export default function FaqSection() {
@@ -44,17 +44,17 @@ export default function FaqSection() {
           className="flex-1 md:pr-16"
         >
           <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4 text-gray-800">
-            Good to know
+            Bilməyiniz Faydalıdır
           </h4>
           <h2 className="text-5xl md:text-6xl font-medium tracking-tighter leading-[1.1] mb-8">
-            Everything about lead times, light and living with our lamps.
+            Mebellərimiz, sifariş və çatdırılma haqqında hər şey.
           </h2>
           <p className="text-gray-600 mb-8 max-w-md leading-relaxed">
-            Still unsure about a fixture, a ceiling height or a finish? Write to us and the studio replies with a concrete recommendation.
+            Mebel seçimi, ölçülər və ya materiallarla bağlı suallarınız var? Bizə yazın, komandamız dərhal köməklik göstərsin.
           </p>
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">
             <Clock className="w-4 h-4" />
-            <span>Studio replies within one business day</span>
+            <span>Studio 1 iş günü ərzində cavablandırır</span>
           </div>
         </motion.div>
 

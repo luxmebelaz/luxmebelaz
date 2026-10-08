@@ -5,27 +5,27 @@ import { motion } from 'framer-motion';
 
 const products = [
   {
-    title: 'Alabaster Globe Pendant',
-    desc: 'Mouth-blown alabaster glass, brass hardware',
-    price: '€800',
+    title: 'Minimalist Divan',
+    desc: 'Yüksək keyfiyyətli parça, fıstıq ağacından ayaqlar',
+    price: '₼ 1,800',
     bgColor: 'bg-[#dcd8d3]'
   },
   {
-    title: 'Matte Black Cone Pendant',
-    desc: 'Powder-coated steel, braided textile cord',
-    price: '€1.400',
+    title: 'Klassik Masa',
+    desc: 'Təbii palıd ağacı, premium örtük',
+    price: '₼ 1,400',
     bgColor: 'bg-[#b0aba3]'
   },
   {
-    title: 'Brass Arc Floor Lamp',
-    desc: 'Brushed brass-plated steel, marble base, linen shade',
-    price: '€98',
+    title: 'Lüks Kreslo',
+    desc: 'Erqonomik dizayn, təbii dəri',
+    price: '₼ 850',
     bgColor: 'bg-[#dfcbb3]'
   },
   {
-    title: 'Ribbed Ceramic Table Lamp',
-    desc: 'Hand-thrown ribbed ceramic, cotton drum shade',
-    price: '€450',
+    title: 'Modul Şkaf',
+    desc: 'Geniş həcmli, modern fasad',
+    price: '₼ 2,450',
     bgColor: 'bg-[#edeae5]'
   }
 ];
@@ -53,19 +53,19 @@ export default function ProductsSection() {
       {/* Marquee Banner */}
       <div className="bg-[#e0ca94] py-3 overflow-hidden border-y border-black/10 whitespace-nowrap flex relative">
         <div className="animate-marquee flex gap-8 text-xs font-semibold tracking-widest uppercase">
-          <span>Brand Identity</span> <span>•</span> 
-          <span>Web Design</span> <span>•</span> 
-          <span>Motion</span> <span>•</span> 
-          <span>Packaging</span> <span>•</span> 
-          <span>Senior-Led. Fully Remote. Precision-Built.</span> <span>•</span> 
-          <span>Award-calibre creative, without the agency overhead.</span> <span>•</span>
+          <span>Yüksək Keyfiyyət</span> <span>•</span> 
+          <span>Eksklüziv Dizayn</span> <span>•</span> 
+          <span>Zəmanət</span> <span>•</span> 
+          <span>Rahat Çatdırılma</span> <span>•</span> 
+          <span>Hər evə uyğun mebellər.</span> <span>•</span> 
+          <span>Modern və klassik üslubun vəhdəti.</span> <span>•</span>
           {/* Repeat to ensure seamless scrolling */}
-          <span>Brand Identity</span> <span>•</span> 
-          <span>Web Design</span> <span>•</span> 
-          <span>Motion</span> <span>•</span> 
-          <span>Packaging</span> <span>•</span> 
-          <span>Senior-Led. Fully Remote. Precision-Built.</span> <span>•</span> 
-          <span>Award-calibre creative, without the agency overhead.</span>
+          <span>Yüksək Keyfiyyət</span> <span>•</span> 
+          <span>Eksklüziv Dizayn</span> <span>•</span> 
+          <span>Zəmanət</span> <span>•</span> 
+          <span>Rahat Çatdırılma</span> <span>•</span> 
+          <span>Hər evə uyğun mebellər.</span> <span>•</span> 
+          <span>Modern və klassik üslubun vəhdəti.</span>
         </div>
       </div>
 
@@ -78,11 +78,11 @@ export default function ProductsSection() {
           className="flex justify-between items-end mb-12"
         >
           <div>
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4">Ego Store</h4>
-            <h2 className="text-6xl font-bold tracking-tighter uppercase leading-none">Our Lamps</h2>
+            <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4">Mebel Kolleksiyası</h4>
+            <h2 className="text-6xl font-bold tracking-tighter uppercase leading-none">Məhsullarımız</h2>
           </div>
           <a href="#" className="text-sm font-medium hover:opacity-70 transition-opacity">
-            View Full Collection &rarr;
+            Bütün Kolleksiyaya Bax &rarr;
           </a>
         </motion.div>
 
@@ -104,7 +104,7 @@ export default function ProductsSection() {
               <div className={`h-[55%] ${product.bgColor} relative overflow-hidden`}>
                 <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent mix-blend-overlay"></div>
                 <div className="absolute inset-0 flex items-center justify-center text-black/10 font-bold text-2xl transition-transform duration-700 group-hover:scale-110">
-                  Image
+                  Şəkil
                 </div>
               </div>
               <div className="h-[45%] bg-[#0a0a0a] text-white p-6 flex flex-col justify-between relative overflow-hidden">
@@ -114,7 +114,7 @@ export default function ProductsSection() {
                   <p className="text-gray-400 text-sm leading-relaxed">{product.desc}</p>
                 </div>
                 <div className="relative z-10">
-                  <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">Price</span>
+                  <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">Qiymət</span>
                   <span className="text-xl font-bold">{product.price}</span>
                 </div>
               </div>

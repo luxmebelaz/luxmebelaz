@@ -36,22 +36,22 @@ export default function BannerSection() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
             className="text-xs font-semibold tracking-[0.2em] uppercase text-[#b8a587] mb-12"
           >
-            Light Manifesto
+            LuxMebel
           </motion.h4>
           
           <div className="flex justify-center items-center gap-12 md:gap-24 w-full mb-16 px-4">
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[100px] md:text-[140px] lg:text-[180px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">FORM</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">FORMA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[100px] md:text-[140px] lg:text-[180px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">LIGHT</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">FUNKSİYA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[100px] md:text-[140px] lg:text-[180px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">ART</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">DİZAYN</motion.span>
           </div>
           
           <motion.p 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
             className="text-gray-300 max-w-lg text-lg md:text-xl font-medium leading-relaxed mt-4"
           >
-            From bridges classical sculpture meets generative design technology — transforming spaces into living, living experiences.
+            Hər bir detalında sənət və keyfiyyəti birləşdirən, yaşayış sahələrinizi unikal təcrübəyə çevirən mebellər.
           </motion.p>
         </motion.div>
       </section>
@@ -66,10 +66,10 @@ export default function BannerSection() {
           className="max-w-7xl mx-auto"
         >
           <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4 text-gray-500">
-            Shop by Type
+            Kataloq
           </h4>
           <h2 className="text-6xl font-bold tracking-tighter uppercase leading-none">
-            Our Categories
+            Kateqoriyalar
           </h2>
         </motion.div>
       </section>

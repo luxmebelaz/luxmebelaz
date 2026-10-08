@@ -23,16 +23,15 @@ export default function ManifestoSection() {
         className="max-w-4xl mx-auto mb-24"
       >
         <motion.h4 variants={revealVariants} className="text-xs tracking-[0.2em] text-[#b8a587] uppercase mb-6 font-semibold">
-          Light Manifesto
+          LuxMebel Fəlsəfəsi
         </motion.h4>
-        <motion.h2 variants={revealVariants} className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8">
-          Where Form Meets Light<br />
-          And Light Becomes Art
+        <motion.h2 variants={revealVariants} className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8 text-white">
+          Rahatlığın və<br />
+          Eleqantlığın Təcəssümü
         </motion.h2>
         <motion.p variants={revealVariants} className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          We craft lamps that go beyond illumination. Each piece is a sculptural object
-          merging classical aesthetics with generative AI design — transforming spaces
-          into unique, living experiences.
+          Biz sadəcə mebel yaratmırıq. Hər bir detal diqqətlə seçilir və fərdi yanaşma ilə
+          hazırlanır ki, eviniz həm funksional, həm də estetik bir incəsənət əsərinə çevrilsin.
         </motion.p>
       </motion.div>
 
@@ -46,12 +45,12 @@ export default function ManifestoSection() {
         {/* Left Column */}
         <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] rounded-tl-3xl rounded-bl-3xl overflow-hidden border-r border-black/50">
           <div className="bg-[#dcd8d3] text-black py-8 flex flex-col justify-center items-center h-[25%]">
-            <h3 className="text-5xl font-bold tracking-tighter mb-1">200<span className="text-3xl">+</span></h3>
-            <p className="text-sm font-medium">Unique Designs</p>
+            <h3 className="text-5xl font-bold tracking-tighter mb-1">500<span className="text-3xl">+</span></h3>
+            <p className="text-sm font-medium">Unikal Model</p>
           </div>
           <div className="bg-[#2a2a2a] h-[75%] relative">
              <div className="absolute inset-0 bg-gradient-to-b from-[#2a2a2a] to-[#111]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Image</div>
+             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
           </div>
         </motion.div>
 
@@ -59,22 +58,22 @@ export default function ManifestoSection() {
         <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] overflow-hidden border-r border-black/50">
           <div className="bg-[#3a352d] h-[80%] relative">
              <div className="absolute inset-0 bg-gradient-to-t from-[#3a352d] to-[#1f1d19]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Image</div>
+             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
           </div>
           <div className="bg-[#dcd8d3] text-black flex flex-col justify-center items-center h-[20%]">
-            <h3 className="text-5xl font-bold tracking-tighter">15</h3>
+            <h3 className="text-5xl font-bold tracking-tighter">15+ İL</h3>
           </div>
         </motion.div>
 
         {/* Right Column */}
         <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] rounded-tr-3xl rounded-br-3xl overflow-hidden">
           <div className="bg-[#dcd8d3] text-black py-8 flex flex-col justify-center items-center h-[25%]">
-            <h3 className="text-5xl font-bold tracking-tighter mb-1">98<span className="text-3xl">%</span></h3>
-            <p className="text-sm font-medium">Satisfied Clients</p>
+            <h3 className="text-5xl font-bold tracking-tighter mb-1">99<span className="text-3xl">%</span></h3>
+            <p className="text-sm font-medium">Məmnun Müştəri</p>
           </div>
           <div className="bg-[#1f1d1c] h-[75%] relative">
              <div className="absolute inset-0 bg-gradient-to-b from-[#1f1d1c] to-[#0a0a0a]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Image</div>
+             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
           </div>
         </motion.div>
       </motion.div>

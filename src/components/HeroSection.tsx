@@ -73,18 +73,18 @@ export default function HeroSection() {
           variants={containerVariants} 
           initial="hidden" 
           animate="visible" 
-          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 text-white"
         >
           <motion.h1 
             variants={itemVariants}
             className="text-6xl md:text-8xl lg:text-[100px] leading-[1.1] font-medium tracking-tight"
           >
-            Light Shapes<br />
-            Every Space
+            Məkanınıza<br />
+            Eleqantlıq Qatın
           </motion.h1>
           
           <motion.p variants={itemVariants} className="text-gray-300 max-w-sm text-lg md:text-xl pb-4">
-            Minimalist lamps where classical sculpture meets generative design technology.
+            Klassik və müasir dizaynın mükəmməl harmoniyasını özündə birləşdirən eksklüziv mebel kolleksiyası.
           </motion.p>
         </motion.div>
 
@@ -102,9 +102,9 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 1 }}
           className="flex justify-between items-center text-xs md:text-sm tracking-widest text-gray-400 mb-8 uppercase"
         >
-          <span>EGO COLLECTION — EST. 2024</span>
+          <span>LUXMEBEL KOLLEKSİYASI — EST. 2024</span>
           <span className="flex items-center gap-2 hover:text-white cursor-pointer transition-colors">
-            DISCOVER <span>↓</span>
+            KƏŞF ET <span>↓</span>
           </span>
         </motion.div>
 
