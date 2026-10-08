@@ -1,6 +1,8 @@
 import { saveOrder } from '@/lib/db';
 import { isEmail, isPhone } from '@/lib/format';
 import { getProduct } from '@/lib/repository';
+import { getServerSupabase } from '@/lib/supabase/server';
+import { site } from '@/lib/site';
 
 const clean = (value: unknown, max: number) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
 
@@ -59,14 +61,31 @@ export async function POST(request: Request) {
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
   const orderNumber = makeOrderNumber();
 
-  await saveOrder({
-    orderNumber,
-    customer: { name, phone, email: email || undefined, city, address },
-    items,
-    total,
-    payment: PAYMENTS[paymentKey],
-    note: note || undefined,
-  });
+  // Giriş edibsə, sifariş hesabına bağlanır
+  let userId: string | undefined;
+  try {
+    const supabase = await getServerSupabase();
+    userId = (await supabase?.auth.getUser())?.data.user?.id;
+  } catch {
+    userId = undefined;
+  }
+
+  try {
+    await saveOrder({
+      orderNumber,
+      userId,
+      customer: { name, phone, email: email || undefined, city, address },
+      items,
+      total,
+      payment: PAYMENTS[paymentKey],
+      note: note || undefined,
+    });
+  } catch {
+    return Response.json(
+      { ok: false, error: `Sifarişi yadda saxlamaq mümkün olmadı. Zəhmət olmasa zəng edin: ${site.phone}` },
+      { status: 500 },
+    );
+  }
 
   return Response.json({ ok: true, orderNumber, total, payment: PAYMENTS[paymentKey], items });
 }

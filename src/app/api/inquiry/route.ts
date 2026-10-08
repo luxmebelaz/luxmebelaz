@@ -23,6 +23,10 @@ export async function POST(request: Request) {
   if (!isPhone(phone)) return Response.json({ ok: false, error: 'Telefon nömrəsi düzgün deyil.' }, { status: 422 });
   if (message.length < 5) return Response.json({ ok: false, error: 'Mesajınızı yazın.' }, { status: 422 });
 
-  await saveInquiry({ name, phone, space: space || undefined, message });
+  try {
+    await saveInquiry({ name, phone, space: space || undefined, message });
+  } catch {
+    return Response.json({ ok: false, error: 'Mesajı göndərmək mümkün olmadı. Zəhmət olmasa zəng edin.' }, { status: 500 });
+  }
   return Response.json({ ok: true });
 }

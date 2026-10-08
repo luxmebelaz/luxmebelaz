@@ -25,8 +25,8 @@ npm run lint
 Qoşulma nöqtələri yalnız bu üç fayldır, səhifələr dəyişməməlidir:
 
 1. `src/lib/repository.ts` — `getProducts`, `getProduct`, `getCategories`, `getFaqs`, `searchCatalog` funksiyalarının içini Supabase sorğuları ilə əvəz edin. Tiplər `src/lib/data/types.ts`-dədir. Məlumatı `fetch`/DB ilə oxuyanda `"use cache"` istifadə edin və ya `<Suspense>` daxilində saxlayın (`cacheComponents` aktivdir).
-2. `src/lib/db.ts` — `saveInquiry` və `saveOrder` hazırda yalnız server jurnalına yazır; `supabase.from('inquiries'|'orders').insert(...)` ilə əvəz edin.
-3. `src/lib/auth.ts` — `registerUser`, `loginUser`, `logoutUser` hazırda brauzer yaddaşında işləyən **demo**dur (başqa cihazda işləmir). Supabase Auth ilə əvəz edin. Sifariş tarixçəsi (`src/lib/orders.ts`) də `orders` cədvəlindən oxunmalıdır.
+2. `src/lib/db.ts` — `saveInquiry` və `saveOrder` (service role açarı olmadıqda yalnız server jurnalına yazır).
+3. `src/lib/auth.ts` — Supabase Auth ilə işləyir (e-poçt+şifrə, Google, şifrə bərpası). `/auth/callback` marşrutu Google/e-poçt təsdiqini sessiyaya çevirir. Cədvəllər üçün `supabase/schema.sql`, sonra `supabase/auth.sql` işlədin. `src/lib/db.ts` `SUPABASE_SERVICE_ROLE_KEY` varsa sifariş və sorğuları bazaya yazır.
 
 Cədvəl sxemi `supabase/schema.sql` faylındadır. Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` yalnız server tərəfində istifadə olunmalıdır.
 

@@ -1,22 +1,65 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { LogOut, Package } from 'lucide-react';
-import { logoutUser, useUser } from '@/lib/auth';
-import { useOrders } from '@/lib/orders';
-import { useHydrated } from '@/lib/cart';
+import { logoutUser, useAuth } from '@/lib/auth';
+import { getBrowserSupabase } from '@/lib/supabase/client';
+import { useOrders, type StoredOrder } from '@/lib/orders';
 import { formatPrice } from '@/lib/format';
 import { primaryButton, secondaryButton } from '@/components/ui';
 
+type OrderRow = {
+  order_number: string;
+  created_at: string;
+  total: number | string;
+  payment: string;
+  items: { name: string; qty: number; price: number }[];
+};
+
+// Daxil olmuş istifadəçinin sifarişlərini Supabase-dən oxuyur (RLS yalnız öz sifarişlərini verir)
+function useRemoteOrders(userId: string | undefined) {
+  const [orders, setOrders] = useState<StoredOrder[] | null>(null);
+
+  useEffect(() => {
+    const supabase = getBrowserSupabase();
+    if (!supabase || !userId) return;
+    let cancelled = false;
+    supabase
+      .from('orders')
+      .select('order_number, created_at, total, payment, items')
+      .order('created_at', { ascending: false })
+      .limit(50)
+      .then(({ data, error }) => {
+        if (cancelled || error || !data) return;
+        setOrders(
+          (data as OrderRow[]).map((r) => ({
+            orderNumber: r.order_number,
+            createdAt: r.created_at,
+            total: Number(r.total),
+            payment: r.payment,
+            items: r.items ?? [],
+          })),
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  return orders;
+}
+
 export default function AccountView() {
   const router = useRouter();
-  const hydrated = useHydrated();
-  const user = useUser();
-  const orders = useOrders();
+  const { user, loading } = useAuth();
+  const localOrders = useOrders();
+  const remoteOrders = useRemoteOrders(user?.id);
+  const orders = remoteOrders ?? localOrders;
 
-  if (!hydrated) return <div className="glass-light rounded-3xl h-64 animate-pulse" aria-hidden="true" />;
+  if (loading) return <div className="glass-light rounded-3xl h-64 animate-pulse" aria-hidden="true" />;
 
   if (!user) {
     return (
@@ -34,16 +77,27 @@ export default function AccountView() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6 lg:gap-8 items-start">
       <section className="glass-light rounded-3xl p-6 sm:p-8">
-        <h2 className="text-xl font-bold mb-5">Profil</h2>
+        <div className="flex items-center gap-4 mb-5">
+          {user.avatar ? (
+            <Image src={user.avatar} alt="" width={56} height={56} className="rounded-full" referrerPolicy="no-referrer" unoptimized />
+          ) : (
+            <span className="w-14 h-14 rounded-full bg-[#111] text-white flex items-center justify-center text-xl font-bold">
+              {user.name.slice(0, 1).toLocaleUpperCase('az')}
+            </span>
+          )}
+          <h2 className="text-xl font-bold">Profil</h2>
+        </div>
         <dl className="flex flex-col gap-4 text-[15px]">
           <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Ad, soyad</dt><dd className="font-semibold">{user.name}</dd></div>
           <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">E-poçt</dt><dd className="font-semibold break-all">{user.email}</dd></div>
-          <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Telefon</dt><dd className="font-semibold">{user.phone}</dd></div>
+          {user.phone && (
+            <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Telefon</dt><dd className="font-semibold">{user.phone}</dd></div>
+          )}
         </dl>
         <button
           type="button"
-          onClick={() => {
-            logoutUser();
+          onClick={async () => {
+            await logoutUser();
             router.push('/');
           }}
           className={`${secondaryButton} w-full mt-7`}
