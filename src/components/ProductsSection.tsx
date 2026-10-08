@@ -2,43 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { images } from '@/lib/images';
-
-const products = [
-  {
-    title: 'Minimalist Divan',
-    desc: 'Yüksək keyfiyyətli parça, fıstıq ağacından ayaqlar',
-    price: '₼ 1,800',
-    bgColor: 'bg-[#dcd8d3]',
-    image: images.products.sofa,
-    alt: 'Yaşıl məxmər divan'
-  },
-  {
-    title: 'Klassik Masa',
-    desc: 'Təbii palıd ağacı, premium örtük',
-    price: '₼ 1,400',
-    bgColor: 'bg-[#b0aba3]',
-    image: images.products.table,
-    alt: 'Ağ klassik masa və stul'
-  },
-  {
-    title: 'Lüks Kreslo',
-    desc: 'Erqonomik dizayn, təbii dəri',
-    price: '₼ 850',
-    bgColor: 'bg-[#dfcbb3]',
-    image: images.products.armchair,
-    alt: 'Sarı kreslo'
-  },
-  {
-    title: 'Modul Şkaf',
-    desc: 'Geniş həcmli, modern fasad',
-    price: '₼ 2,450',
-    bgColor: 'bg-[#edeae5]',
-    image: images.products.cabinet,
-    alt: 'Taxta modul şkaf'
-  }
-];
+import { formatPrice } from '@/lib/format';
+import AddToCartButton from '@/components/AddToCartButton';
+import type { Product } from '@/lib/data/types';
 
 const marqueeItems = [
   'Yüksək Keyfiyyət',
@@ -49,7 +17,7 @@ const marqueeItems = [
   'Modern və klassik üslubun vəhdəti.',
 ];
 
-export default function ProductsSection() {
+export default function ProductsSection({ products }: { products: Product[] }) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -95,11 +63,11 @@ export default function ProductsSection() {
         >
           <div>
             <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3">Mebel Kolleksiyası</h4>
-            <h2 className="font-display text-6xl md:text-7xl uppercase leading-none">Məhsullarımız</h2>
+            <h2 className="font-display text-[40px] sm:text-6xl md:text-7xl uppercase leading-none">Məhsullarımız</h2>
           </div>
-          <a href="#" className="text-sm font-medium hover:opacity-70 transition-opacity">
+          <Link href="/magaza" className="text-sm font-medium hover:opacity-70 transition-opacity">
             Bütün Kolleksiyaya Bax &rarr;
-          </a>
+          </Link>
         </motion.div>
 
         <motion.div 
@@ -109,34 +77,37 @@ export default function ProductsSection() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {products.map((product, index) => (
+          {products.map((product) => (
             <motion.div 
-              key={index} 
+              key={product.slug} 
               variants={cardVariants}
               whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className="flex flex-col h-[520px] rounded-3xl overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.3)] group relative cursor-pointer"
+              className="flex flex-col h-[560px] rounded-3xl overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.3)] group relative cursor-pointer"
             >
               <div className="absolute inset-0 rounded-3xl border-[0.5px] border-white/40 pointer-events-none z-20"></div>
-              <div className={`h-[55%] ${product.bgColor} relative overflow-hidden`}>
+              <Link href={`/magaza/${product.slug}`} aria-label={`${product.name} — ətraflı bax`} className="block h-[55%] bg-[#b5aba0] relative overflow-hidden">
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <Image
                     src={product.image}
-                    alt={product.alt}
+                    alt={product.imageAlt}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
                   />
                 </div>
-              </div>
+              </Link>
               <div className="h-[45%] bg-[#0a0a0a] text-white p-6 flex flex-col justify-between relative overflow-hidden">
                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 <div className="relative z-10">
-                  <h3 className="text-[26px] font-normal tracking-[-0.02em] mb-3 leading-[1.1] group-hover:text-[#e0ca94] transition-colors duration-300">{product.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{product.desc}</p>
+                  <h3 className="text-[26px] font-normal tracking-[-0.02em] mb-3 leading-[1.1] group-hover:text-[#e0ca94] transition-colors duration-300"><Link href={`/magaza/${product.slug}`}>{product.name}</Link></h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{product.summary}</p>
                 </div>
-                <div className="relative z-10">
-                  <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em] block mb-1">Qiymət</span>
-                  <span className="text-2xl font-semibold">{product.price}</span>
+                <div className="relative z-10 flex items-end justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] text-neutral-500 uppercase tracking-[0.2em] block mb-1">Qiymət</span>
+                    <span className="text-2xl font-semibold">{formatPrice(product.price)}</span>
+                  </div>
+                  <AddToCartButton product={product} />
                 </div>
               </div>
             </motion.div>

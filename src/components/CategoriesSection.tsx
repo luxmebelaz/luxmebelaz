@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Sofa, BedDouble, Armchair } from 'lucide-react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function CategoriesSection() {
@@ -45,9 +46,9 @@ export default function CategoriesSection() {
               Qonaq otağınız üçün müasir və klassik dizaynlı, erqonomik divanlar. Həm rahatlıq, həm də estetika axtaranlar üçün.
             </p>
           </div>
-          <a href="#magaza" className="text-sm font-medium hover:opacity-70 transition-opacity">
+          <Link href="/kateqoriyalar/divanlar" className="text-sm font-medium hover:opacity-70 transition-opacity">
             Divanlara Bax
-          </a>
+          </Link>
         </motion.div>
 
         {/* Table Category */}
@@ -64,9 +65,9 @@ export default function CategoriesSection() {
               Günün yorğunluğunu ata biləcəyiniz, keyfiyyətli taxta və materiallardan hazırlanmış yataq mebelləri.
             </p>
           </div>
-          <a href="#magaza" className="text-sm font-medium text-gold hover:opacity-70 transition-opacity relative z-10">
+          <Link href="/kateqoriyalar/yataq-otagi" className="text-sm font-medium text-gold hover:opacity-70 transition-opacity relative z-10">
             Yataq Otağına Bax
-          </a>
+          </Link>
         </motion.div>
 
         {/* Pendant Category */}
@@ -82,9 +83,9 @@ export default function CategoriesSection() {
               Rahatlığınız üçün fərdi toxunuşlar. Otağınıza xüsusi rəng qatacaq lüks kreslo kolleksiyası.
             </p>
           </div>
-          <a href="#magaza" className="text-sm font-medium hover:opacity-70 transition-opacity">
+          <Link href="/kateqoriyalar/kreslolar" className="text-sm font-medium hover:opacity-70 transition-opacity">
             Kreslolara Bax
-          </a>
+          </Link>
         </motion.div>
 
       </motion.div>

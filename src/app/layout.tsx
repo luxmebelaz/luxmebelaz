@@ -1,39 +1,50 @@
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue, Geist_Mono } from "next/font/google";
+import { Manrope, Oswald } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { site } from "@/lib/site";
 
 // "latin-ext" olmadan ə, ı, ş, ç, ğ, ö, ü kimi Azərbaycan hərfləri başqa şriftə düşür.
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin", "latin-ext"],
 });
 
-const bebas = Bebas_Neue({
-  variable: "--font-bebas",
-  weight: "400",
-  subsets: ["latin", "latin-ext"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin", "latin-ext"],
 });
 
 export const metadata: Metadata = {
-  title: "LuxMebel — Eleqant və Müasir Mebellər",
-  description:
-    "LuxMebel: klassik və müasir dizaynı birləşdirən eksklüziv mebel kolleksiyası. Divanlar, yataq otağı, kreslolar və fərdi sifarişlər.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: "LuxMebel — Eleqant və Müasir Mebellər",
+    template: "%s | LuxMebel",
+  },
+  description: site.description,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "az_AZ",
+    title: "LuxMebel — Eleqant və Müasir Mebellər",
+    description: site.description,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="az"
-      className={`${inter.variable} ${bebas.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${manrope.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

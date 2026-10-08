@@ -14,9 +14,8 @@
   --color-paper: var(--paper);
   --color-paper-soft: var(--paper-soft);
   --color-gold: var(--gold);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-display: var(--font-bebas), "Arial Narrow", Impact, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-oswald), "Arial Narrow", Impact, sans-serif;
 
   --animate-marquee: marquee 25s linear infinite;
 
@@ -27,12 +26,12 @@
 }
 
 html {
-  background: var(--background);
+  background: var(--paper);
   scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
+  background: var(--paper);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -68,7 +67,8 @@ body::after {
 }
 
 .font-display {
-  letter-spacing: 0.005em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .edge-fade {

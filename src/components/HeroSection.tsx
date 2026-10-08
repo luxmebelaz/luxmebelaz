@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Gem, Trees, ShieldCheck, Truck, Ruler, Sofa } from 'lucide-react';
 import { images } from '@/lib/images';
@@ -110,9 +111,17 @@ export default function HeroSection() {
             Eleqantlıq Qatın
           </motion.h1>
           
-          <motion.p variants={itemVariants} className="text-gray-300 max-w-sm text-lg md:text-xl pb-4">
-            Klassik və müasir dizaynın mükəmməl harmoniyasını özündə birləşdirən eksklüziv mebel kolleksiyası.
-          </motion.p>
+          <motion.div variants={itemVariants} className="flex flex-col items-start gap-6 max-w-sm pb-4">
+            <p className="text-gray-300 text-lg md:text-xl">
+              Klassik və müasir dizaynın mükəmməl harmoniyasını özündə birləşdirən eksklüziv mebel kolleksiyası.
+            </p>
+            <Link
+              href="/magaza"
+              className="inline-flex items-center h-12 px-7 rounded-full bg-[#ececec] text-black text-sm font-bold hover:bg-gold transition-colors"
+            >
+              Mağazaya keç
+            </Link>
+          </motion.div>
         </motion.div>
 
         <motion.div 
@@ -127,10 +136,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="flex justify-between items-center font-mono text-xs md:text-sm tracking-widest text-gold mb-8 uppercase"
+          className="flex justify-between items-center text-xs md:text-sm tracking-widest text-gold mb-8 uppercase"
         >
           <span>LUXMEBEL KOLLEKSİYASI — EST. 2024</span>
-          <a href="#haqqimizda" className="flex items-center gap-2 hover:text-white cursor-pointer transition-colors">
+          <a href="#felsefe" className="flex items-center gap-2 hover:text-white cursor-pointer transition-colors">
             KƏŞF ET <span>↓</span>
           </a>
         </motion.div>

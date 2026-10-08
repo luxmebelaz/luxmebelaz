@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
 
@@ -16,7 +17,7 @@ export default function ManifestoSection() {
   };
 
   return (
-    <section id="haqqimizda" className="bg-[#141414] py-32 px-6 md:px-16 text-center relative overflow-hidden">
+    <section id="felsefe" className="bg-[#141414] py-32 px-6 md:px-16 text-center relative overflow-hidden">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -35,6 +36,11 @@ export default function ManifestoSection() {
           Biz sadəcə mebel yaratmırıq. Hər bir detal diqqətlə seçilir və fərdi yanaşma ilə
           hazırlanır ki, eviniz həm funksional, həm də estetik bir incəsənət əsərinə çevrilsin.
         </motion.p>
+        <motion.div variants={revealVariants} className="mt-8">
+          <Link href="/haqqimizda" className="inline-flex items-center h-12 px-7 rounded-full border border-white/40 text-sm font-bold text-white hover:bg-white hover:text-black transition-colors">
+            Haqqımızda daha ətraflı
+          </Link>
+        </motion.div>
       </motion.div>
 
       <motion.div

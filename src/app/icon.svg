@@ -1,4 +1,7 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="8" fill="#1a1a1a"/>
-  <path d="M10 22L10 10L16 16L22 10L22 22" stroke="#d9af62" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { fill: #111111; }
+    @media (prefers-color-scheme: dark) { text { fill: #f2f2f2; } }
+  </style>
+  <text x="80" y="29" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" letter-spacing="-0.5">LuxMebel</text>
 </svg>

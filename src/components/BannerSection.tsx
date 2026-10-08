@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { images } from '@/lib/images';
 
@@ -49,11 +50,11 @@ export default function BannerSection() {
           </motion.h4>
           
           <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 lg:gap-12 xl:gap-16 w-full mb-10 md:mb-12 px-4">
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">FORMA</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[64px] lg:text-[84px] xl:text-[104px] 2xl:text-[130px] leading-[0.9] font-normal text-[#f2f2f2]">FORMA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">FUNKSİYA</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[64px] lg:text-[84px] xl:text-[104px] 2xl:text-[130px] leading-[0.9] font-normal text-[#f2f2f2]">FUNKSİYA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">DİZAYN</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[64px] lg:text-[84px] xl:text-[104px] 2xl:text-[130px] leading-[0.9] font-normal text-[#f2f2f2]">DİZAYN</motion.span>
           </div>
           
           <motion.p 
@@ -77,9 +78,14 @@ export default function BannerSection() {
           <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-neutral-800">
             Kataloq
           </h4>
-          <h2 className="font-display text-6xl md:text-7xl uppercase leading-none">
-            Kateqoriyalar
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <h2 className="font-display text-[40px] sm:text-6xl md:text-7xl uppercase leading-none">
+              Kateqoriyalar
+            </h2>
+            <Link href="/kateqoriyalar" className="text-sm font-semibold hover:opacity-70 transition-opacity">
+              Bütün kateqoriyalar &rarr;
+            </Link>
+          </div>
         </motion.div>
       </section>
     </>

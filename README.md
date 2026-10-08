@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LuxMebel
 
-## Getting Started
-
-First, run the development server:
+Next.js (App Router) ilə hazırlanmış mebel mağazası saytı. Dil: Azərbaycan.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # inkişaf
+npm run build   # istehsal build-i
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Strukturu
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Qovluq | Məzmun |
+| --- | --- |
+| `src/app/` | Səhifələr (`/magaza`, `/kateqoriyalar`, `/bloq`, `/sebet`, `/sifaris`, `/hesab`, `/elaqe` …) və API (`/api/inquiry`, `/api/orders`) |
+| `src/components/` | UI komponentləri (ana səhifə bölmələri, mağaza, səbət, formalar) |
+| `src/lib/site.ts` | Telefon, e-poçt, VÖEN, xəritə, sosial şəbəkə ünvanları |
+| `src/lib/data/` | Nümunə məlumatlar: kateqoriyalar, məhsullar, məqalələr, suallar |
+| `src/lib/repository.ts` | **Bütün məlumat oxuması buradan keçir** |
+| `src/lib/db.ts` | **Server tərəfi yazma (sorğu, sifariş)** |
+| `src/lib/auth.ts` | Hesab (hazırda yerli demo) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Supabase qoşulması
 
-## Learn More
+Qoşulma nöqtələri yalnız bu üç fayldır, səhifələr dəyişməməlidir:
 
-To learn more about Next.js, take a look at the following resources:
+1. `src/lib/repository.ts` — `getProducts`, `getProduct`, `getCategories`, `getPosts`, `getFaqs` funksiyalarının içini Supabase sorğuları ilə əvəz edin. Tiplər `src/lib/data/types.ts`-dədir. Məlumatı `fetch`/DB ilə oxuyanda `"use cache"` istifadə edin və ya `<Suspense>` daxilində saxlayın (`cacheComponents` aktivdir).
+2. `src/lib/db.ts` — `saveInquiry` və `saveOrder` hazırda yalnız server jurnalına yazır; `supabase.from('inquiries'|'orders').insert(...)` ilə əvəz edin.
+3. `src/lib/auth.ts` — `registerUser`, `loginUser`, `logoutUser` hazırda brauzer yaddaşında işləyən **demo**dur (başqa cihazda işləmir). Supabase Auth ilə əvəz edin. Sifariş tarixçəsi (`src/lib/orders.ts`) də `orders` cədvəlindən oxunmalıdır.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` yalnız server tərəfində istifadə olunmalıdır.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## imgbb qoşulması
 
-## Deploy on Vercel
+`next.config.ts`-də `i.ibb.co` şəkil mənbəyi olaraq icazəlidir. imgbb-yə yüklənmiş şəkilin birbaşa ünvanını (`https://i.ibb.co/...`) məhsulun `image` sahəsinə yazmaq kifayətdir. Yükləmə (API açarı ilə) yalnız server marşrutunda aparılmalıdır.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Qeyd
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hazırda məhsul, qiymət, məqalə və rəy məzmunu **nümunədir** — real məlumatla əvəz edin.

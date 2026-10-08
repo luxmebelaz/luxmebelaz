@@ -19,7 +19,7 @@ export default function TestimonialSection() {
           <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3">
             Rəylər
           </h4>
-          <h2 className="font-display text-6xl md:text-7xl uppercase leading-none">
+          <h2 className="font-display text-[40px] sm:text-6xl md:text-7xl uppercase leading-none">
             Müştərilərimiz
           </h2>
         </div>

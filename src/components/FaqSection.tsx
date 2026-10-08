@@ -1,37 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Plus, Clock } from 'lucide-react';
+import type { Faq } from '@/lib/data/types';
 import { motion } from 'framer-motion';
 
-const faqs = [
-  {
-    q: "Çatdırılma nə qədər vaxt aparır?",
-    a: "Çatdırılma müddəti məhsulun stokda olub-olmamasından və sifarişin növündən asılıdır. Sifarişi təsdiqləyərkən sizə dəqiq tarixi bildiririk.",
-  },
-  {
-    q: "Xüsusi sifariş qəbul edirsinizmi?",
-    a: "Bəli. Ölçü, parça, rəng və karkas materialını sizinlə birlikdə seçirik. Sifarişdən əvvəl eskiz və dəqiq qiymət təqdim olunur.",
-  },
-  {
-    q: "Otağımın ölçülərinə uyğun mebel seçiminə kömək edirsiniz?",
-    a: "Əlbəttə. Otağın ölçülərini və şəkillərini göndərin — dizaynerimiz uyğun modelləri və yerləşdirmə variantlarını təklif edəcək.",
-  },
-  {
-    q: "Mebellər quraşdırılmış şəkildə gəlir?",
-    a: "Böyük gabaritli məhsulları (divan, şkaf, çarpayı) komandamız yerində quraşdırır. Detalları sifarişi təsdiqləyərkən dəqiqləşdiririk.",
-  },
-  {
-    q: "Geri qaytarma və zəmanət siyasətiniz necədir?",
-    a: "Mebellərimizə istehsal qüsurlarına qarşı zəmanət verilir. Zəmanət və geri qaytarma şərtləri sifarişi təsdiqləyərkən sizə yazılı şəkildə təqdim olunur.",
-  },
-  {
-    q: "Beynəlxalq çatdırılma mövcuddurmu?",
-    a: "Xaricə çatdırılma imkanını ünvanınıza uyğun olaraq fərdi şəkildə müzakirə edirik. Bizimlə əlaqə saxlayın.",
-  },
-];
-
-export default function FaqSection() {
+export default function FaqSection({ faqs }: { faqs: Faq[] }) {
   const [open, setOpen] = useState<number | null>(0);
 
   const containerVariants = {
@@ -66,7 +41,7 @@ export default function FaqSection() {
           <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-neutral-800">
             Bilməyiniz Faydalıdır
           </h4>
-          <p className="font-display text-6xl md:text-7xl uppercase leading-none mb-12">
+          <p className="font-display text-[40px] sm:text-6xl md:text-7xl uppercase leading-none mb-12">
             Suallar
           </p>
           <h2 className="text-4xl md:text-5xl font-normal tracking-[-0.03em] leading-[1.05] mb-8">
@@ -75,10 +50,13 @@ export default function FaqSection() {
           <p className="text-neutral-600 mb-8 max-w-md leading-relaxed">
             Mebel seçimi, ölçülər və ya materiallarla bağlı suallarınız var? Bizə yazın, komandamız dərhal köməklik göstərsin.
           </p>
-          <div className="flex items-center gap-2 font-mono text-xs tracking-wider text-neutral-600 uppercase">
+          <div className="flex items-center gap-2 text-xs tracking-wider text-neutral-600 uppercase">
             <Clock className="w-4 h-4" />
             <span>Studio 1 iş günü ərzində cavablandırır</span>
           </div>
+          <Link href="/suallar" className="inline-block mt-8 text-sm font-semibold underline underline-offset-4 hover:opacity-70 transition-opacity">
+            Bütün suallara bax &rarr;
+          </Link>
         </motion.div>
 
         {/* Right Side - Accordion */}
