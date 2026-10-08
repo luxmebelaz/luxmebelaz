@@ -3,6 +3,8 @@ import { ShoppingCart } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ManifestoSection from '@/components/ManifestoSection';
+import ProductsSection from '@/components/ProductsSection';
+import BannerSection from '@/components/BannerSection';
 
 export default function Home() {
   return (
@@ -10,6 +12,8 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <ManifestoSection />
+      <ProductsSection />
+      <BannerSection />
     </main>
   );
 }
