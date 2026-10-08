@@ -5,6 +5,9 @@ import HeroSection from '@/components/HeroSection';
 import ManifestoSection from '@/components/ManifestoSection';
 import ProductsSection from '@/components/ProductsSection';
 import BannerSection from '@/components/BannerSection';
+import CategoriesSection from '@/components/CategoriesSection';
+import TestimonialSection from '@/components/TestimonialSection';
+import BlogSection from '@/components/BlogSection';
 
 export default function Home() {
   return (
@@ -14,6 +17,9 @@ export default function Home() {
       <ManifestoSection />
       <ProductsSection />
       <BannerSection />
+      <CategoriesSection />
+      <TestimonialSection />
+      <BlogSection />
     </main>
   );
 }
