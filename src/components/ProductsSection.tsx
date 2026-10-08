@@ -62,13 +62,15 @@ export default function ProductsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
-            <div key={index} className="flex flex-col h-[500px] rounded-3xl overflow-hidden shadow-sm group">
-              <div className={`h-[60%] ${product.bgColor} relative`}>
+            <div key={index} className="flex flex-col h-[500px] rounded-3xl overflow-hidden shadow-[inset_0_2px_15px_rgba(255,255,255,0.6),0_15px_35px_rgba(0,0,0,0.15)] group relative">
+              <div className="absolute inset-0 rounded-3xl border-[0.5px] border-white/40 pointer-events-none z-20"></div>
+              <div className={`h-[55%] ${product.bgColor} relative overflow-hidden`}>
+                <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent mix-blend-overlay"></div>
                 <div className="absolute inset-0 flex items-center justify-center text-black/10 font-bold text-2xl">
                   Image
                 </div>
               </div>
-              <div className="h-[40%] bg-[#0a0a0a] text-white p-6 flex flex-col justify-between">
+              <div className="h-[45%] bg-[#0a0a0a] text-white p-6 flex flex-col justify-between">
                 <div>
                   <h3 className="text-2xl font-medium mb-3 leading-tight group-hover:text-[#e0ca94] transition-colors">{product.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{product.desc}</p>

@@ -31,8 +31,8 @@ export default function TestimonialSection() {
 
           {/* Text Right Side */}
           <div className="flex-1 max-w-3xl">
-            <h3 className="text-3xl md:text-4xl lg:text-[40px] leading-snug font-medium mb-12 text-gray-800">
-              "Implementation took less than a week, and the results exceeded our expectations. Our workflows became more efficient, and customer satisfaction improved immediately."
+            <h3 className="text-3xl md:text-4xl lg:text-[40px] leading-snug font-medium mb-12 text-gray-800 tracking-tight">
+              Implementation took less than a week, and the results exceeded our expectations. Our workflows became more efficient, and customer satisfaction improved immediately.
             </h3>
             <div>
               <p className="font-bold text-lg">David Kim</p>
