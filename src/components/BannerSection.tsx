@@ -1,15 +1,24 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { images } from '@/lib/images';
 
 export default function BannerSection() {
   return (
     <>
       {/* Banner Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden bg-[#2d2922]">
-        <div className="absolute inset-0 bg-[#2d2922] bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1713] to-transparent"></div>
+      <section className="relative min-h-[600px] py-24 flex items-center justify-center overflow-hidden bg-[#2d2922]">
+        <Image
+          src={images.banner}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center brightness-[0.55] sepia-[0.3]"
+        />
+        <div className="absolute inset-0 bg-[#2d2922]/40 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1713] via-[#1a1713]/20 to-[#1a1713]/50"></div>
         <motion.div 
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -34,22 +43,22 @@ export default function BannerSection() {
         >
           <motion.h4 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
-            className="text-xs font-semibold tracking-[0.2em] uppercase text-[#b8a587] mb-12"
+            className="text-xs font-semibold tracking-[0.25em] uppercase text-[#d8c9a8] mb-10"
           >
             LuxMebel
           </motion.h4>
           
-          <div className="flex justify-center items-center gap-12 md:gap-24 w-full mb-16 px-4">
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">FORMA</motion.span>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 lg:gap-12 xl:gap-16 w-full mb-10 md:mb-12 px-4">
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">FORMA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">FUNKSİYA</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">FUNKSİYA</motion.span>
             <motion.div variants={{ hidden: { height: 0 }, visible: { height: 128, transition: { duration: 1 } } }} className="w-[1px] bg-white/10 hidden md:block"></motion.div>
-            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="text-[70px] md:text-[100px] lg:text-[140px] leading-none font-bold tracking-tight scale-y-[1.3] text-white">DİZAYN</motion.span>
+            <motion.span variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" as const, bounce: 0.4 } } }} className="font-display text-[88px] md:text-[96px] lg:text-[112px] xl:text-[150px] leading-[0.9] font-normal text-[#f2f2f2]">DİZAYN</motion.span>
           </div>
           
           <motion.p 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
-            className="text-gray-300 max-w-lg text-lg md:text-xl font-medium leading-relaxed mt-4"
+            className="text-neutral-300 max-w-xl text-lg md:text-xl leading-relaxed px-4"
           >
             Hər bir detalında sənət və keyfiyyəti birləşdirən, yaşayış sahələrinizi unikal təcrübəyə çevirən mebellər.
           </motion.p>
@@ -57,18 +66,18 @@ export default function BannerSection() {
       </section>
 
       {/* Categories Header (Start of next section) */}
-      <section className="bg-[#e4e1dc] text-black pt-32 pb-16 px-8 md:px-16">
+      <section id="kateqoriyalar" className="bg-paper text-black pt-32 pb-12 px-6 md:px-8">
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="max-w-7xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          <h4 className="text-xs font-bold tracking-[0.2em] uppercase mb-4 text-gray-500">
+          <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-neutral-800">
             Kataloq
           </h4>
-          <h2 className="text-6xl font-bold tracking-tighter uppercase leading-none">
+          <h2 className="font-display text-6xl md:text-7xl uppercase leading-none">
             Kateqoriyalar
           </h2>
         </motion.div>

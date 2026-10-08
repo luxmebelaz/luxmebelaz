@@ -1,79 +1,100 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { images } from '@/lib/images';
 
 export default function ManifestoSection() {
   const revealVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8,  } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8,  }
     }
   };
 
   return (
-    <section className="bg-[#0f0f0f] py-32 px-8 md:px-16 text-center relative overflow-hidden">
-      <motion.div 
+    <section id="haqqimizda" className="bg-[#141414] py-32 px-6 md:px-16 text-center relative overflow-hidden">
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         transition={{ staggerChildren: 0.2 }}
         className="max-w-4xl mx-auto mb-24"
       >
-        <motion.h4 variants={revealVariants} className="text-xs tracking-[0.2em] text-[#b8a587] uppercase mb-6 font-semibold">
+        <motion.h4 variants={revealVariants} className="text-xs tracking-[0.2em] text-gold uppercase mb-6 font-semibold">
           LuxMebel Fəlsəfəsi
         </motion.h4>
-        <motion.h2 variants={revealVariants} className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8 text-white">
+        <motion.h2 variants={revealVariants} className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-[-0.03em] leading-[1.05] mb-8 text-[#ececec]">
           Rahatlığın və<br />
           Eleqantlığın Təcəssümü
         </motion.h2>
-        <motion.p variants={revealVariants} className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+        <motion.p variants={revealVariants} className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
           Biz sadəcə mebel yaratmırıq. Hər bir detal diqqətlə seçilir və fərdi yanaşma ilə
           hazırlanır ki, eviniz həm funksional, həm də estetik bir incəsənət əsərinə çevrilsin.
         </motion.p>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         transition={{ staggerChildren: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-0 h-[600px] max-w-7xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-3 gap-px md:gap-0 md:h-[640px] max-w-6xl mx-auto rounded-[28px] overflow-hidden border-[3px] border-[#cfcfcf]/90 bg-[#cfcfcf] shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_30px_80px_rgba(0,0,0,0.6)]"
       >
         {/* Left Column */}
-        <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] rounded-tl-3xl rounded-bl-3xl overflow-hidden border-r border-black/50">
-          <div className="bg-[#dcd8d3] text-black py-8 flex flex-col justify-center items-center h-[25%]">
-            <h3 className="text-5xl font-bold tracking-tighter mb-1">500<span className="text-3xl">+</span></h3>
+        <motion.div variants={revealVariants} className="flex flex-col h-[520px] md:h-full bg-[#1c1c1c] overflow-hidden">
+          <div className="bg-gradient-to-b from-[#d6d6d6] to-[#bdbdbd] text-black py-4 flex flex-col justify-center items-center h-[22%] shrink-0">
+            <h3 className="font-display text-6xl leading-none mb-1">500<span className="text-4xl">+</span></h3>
             <p className="text-sm font-medium">Unikal Model</p>
           </div>
-          <div className="bg-[#2a2a2a] h-[75%] relative">
-             <div className="absolute inset-0 bg-gradient-to-b from-[#2a2a2a] to-[#111]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
+          <div className="bg-[#2a2a2a] flex-1 relative">
+            <Image
+              src={images.manifesto.left}
+              alt="Tünd taxta divar fonunda künc divan"
+              fill
+              sizes="(max-width: 768px) 100vw, 350px"
+              className="object-cover brightness-[0.8]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/50"></div>
           </div>
         </motion.div>
 
         {/* Center Column */}
-        <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] overflow-hidden border-r border-black/50">
-          <div className="bg-[#3a352d] h-[80%] relative">
-             <div className="absolute inset-0 bg-gradient-to-t from-[#3a352d] to-[#1f1d19]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
+        <motion.div variants={revealVariants} className="flex flex-col h-[520px] md:h-full bg-[#1c1c1c] overflow-hidden">
+          <div className="bg-[#3a352d] flex-1 relative">
+            <Image
+              src={images.manifesto.center}
+              alt="İsti işıqlı qonaq otağı interyeri"
+              fill
+              sizes="(max-width: 768px) 100vw, 350px"
+              className="object-cover brightness-[0.85] sepia-[0.25]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#3a352d]/60 to-transparent"></div>
           </div>
-          <div className="bg-[#dcd8d3] text-black flex flex-col justify-center items-center h-[20%]">
-            <h3 className="text-5xl font-bold tracking-tighter">15+ İL</h3>
+          <div className="bg-gradient-to-b from-[#d6d6d6] to-[#bdbdbd] text-black flex flex-col justify-center items-center h-[22%] shrink-0">
+            <h3 className="font-display text-6xl leading-none mb-1">15<span className="text-4xl">+</span></h3>
+            <p className="text-sm font-medium">İllik Ustalıq</p>
           </div>
         </motion.div>
 
         {/* Right Column */}
-        <motion.div variants={revealVariants} className="flex flex-col h-full bg-[#1c1c1c] rounded-tr-3xl rounded-br-3xl overflow-hidden">
-          <div className="bg-[#dcd8d3] text-black py-8 flex flex-col justify-center items-center h-[25%]">
-            <h3 className="text-5xl font-bold tracking-tighter mb-1">99<span className="text-3xl">%</span></h3>
+        <motion.div variants={revealVariants} className="flex flex-col h-[520px] md:h-full bg-[#1c1c1c] overflow-hidden">
+          <div className="bg-gradient-to-b from-[#d6d6d6] to-[#bdbdbd] text-black py-4 flex flex-col justify-center items-center h-[22%] shrink-0">
+            <h3 className="font-display text-6xl leading-none mb-1">99<span className="text-4xl">%</span></h3>
             <p className="text-sm font-medium">Məmnun Müştəri</p>
           </div>
-          <div className="bg-[#1f1d1c] h-[75%] relative">
-             <div className="absolute inset-0 bg-gradient-to-b from-[#1f1d1c] to-[#0a0a0a]"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-white/10 font-bold text-4xl">Şəkil</div>
+          <div className="bg-[#1f1d1c] flex-1 relative">
+            <Image
+              src={images.manifesto.right}
+              alt="Kərpic divarlı loft məkanında divan və masa"
+              fill
+              sizes="(max-width: 768px) 100vw, 350px"
+              className="object-cover brightness-[0.8]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/55"></div>
           </div>
         </motion.div>
       </motion.div>

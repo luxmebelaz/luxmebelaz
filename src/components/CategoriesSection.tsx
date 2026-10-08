@@ -23,29 +23,29 @@ export default function CategoriesSection() {
   };
 
   return (
-    <section className="bg-[#e4e1dc] text-black pb-32 px-8 md:px-16">
+    <section className="bg-paper text-black pb-32 px-6 md:px-8">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6"
       >
         
         {/* Floor Category */}
         <motion.div 
           variants={cardVariants}
           whileHover={{ y: -5 }}
-          className="bg-[#e8e6e1] rounded-[40px] p-10 shadow-[inset_0_2px_20px_rgba(255,255,255,0.8),0_10px_30px_rgba(0,0,0,0.05)] flex flex-col justify-between h-[450px]"
+          className="glass-light rounded-[40px] p-10 flex flex-col justify-between min-h-[400px] md:h-[380px]"
         >
-          <Sofa className="w-8 h-8 mb-8" strokeWidth={1.5} />
+          <Sofa className="w-8 h-8 mb-4" strokeWidth={1.5} />
           <div>
-            <h3 className="text-3xl font-bold tracking-tighter uppercase mb-4">Divanlar</h3>
-            <p className="text-gray-600 text-sm leading-relaxed mb-8">
+            <h3 className="font-display text-4xl uppercase mb-3">Divanlar</h3>
+            <p className="text-neutral-800 text-[15px] leading-relaxed mb-6">
               Qonaq otağınız üçün müasir və klassik dizaynlı, erqonomik divanlar. Həm rahatlıq, həm də estetika axtaranlar üçün.
             </p>
           </div>
-          <a href="#" className="text-sm font-medium hover:opacity-70 transition-opacity">
+          <a href="#magaza" className="text-sm font-medium hover:opacity-70 transition-opacity">
             Divanlara Bax
           </a>
         </motion.div>
@@ -54,17 +54,17 @@ export default function CategoriesSection() {
         <motion.div 
           variants={cardVariants}
           whileHover={{ y: -5 }}
-          className="bg-[#111] text-white rounded-[40px] p-10 shadow-[inset_0_2px_10px_rgba(255,255,255,0.1),0_20px_40px_rgba(0,0,0,0.4)] flex flex-col justify-between h-[450px] relative overflow-hidden"
+          className="glass-dark group text-white rounded-[40px] p-10 flex flex-col justify-between min-h-[400px] md:h-[380px] relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#d9af62] rounded-full blur-[100px] opacity-10 transition-opacity duration-500 group-hover:opacity-30"></div>
-          <BedDouble className="w-8 h-8 mb-8 text-[#d9af62]" strokeWidth={1.5} />
+          <BedDouble className="w-8 h-8 mb-4 text-gold relative z-10" strokeWidth={1.5} />
           <div className="relative z-10">
-            <h3 className="text-3xl font-bold tracking-tighter uppercase mb-4">Yataq Otağı</h3>
-            <p className="text-gray-400 text-sm leading-relaxed mb-8">
+            <h3 className="font-display text-4xl uppercase mb-3">Yataq Otağı</h3>
+            <p className="text-neutral-300 text-[15px] leading-relaxed mb-6">
               Günün yorğunluğunu ata biləcəyiniz, keyfiyyətli taxta və materiallardan hazırlanmış yataq mebelləri.
             </p>
           </div>
-          <a href="#" className="text-sm font-medium text-[#d9af62] hover:opacity-70 transition-opacity relative z-10">
+          <a href="#magaza" className="text-sm font-medium text-gold hover:opacity-70 transition-opacity relative z-10">
             Yataq Otağına Bax
           </a>
         </motion.div>
@@ -73,16 +73,16 @@ export default function CategoriesSection() {
         <motion.div 
           variants={cardVariants}
           whileHover={{ y: -5 }}
-          className="bg-[#e8e6e1] rounded-[40px] p-10 shadow-[inset_0_2px_20px_rgba(255,255,255,0.8),0_10px_30px_rgba(0,0,0,0.05)] flex flex-col justify-between h-[450px]"
+          className="glass-light rounded-[40px] p-10 flex flex-col justify-between min-h-[400px] md:h-[380px]"
         >
-          <Armchair className="w-8 h-8 mb-8" strokeWidth={1.5} />
+          <Armchair className="w-8 h-8 mb-4" strokeWidth={1.5} />
           <div>
-            <h3 className="text-3xl font-bold tracking-tighter uppercase mb-4">Kreslolar</h3>
-            <p className="text-gray-600 text-sm leading-relaxed mb-8">
+            <h3 className="font-display text-4xl uppercase mb-3">Kreslolar</h3>
+            <p className="text-neutral-800 text-[15px] leading-relaxed mb-6">
               Rahatlığınız üçün fərdi toxunuşlar. Otağınıza xüsusi rəng qatacaq lüks kreslo kolleksiyası.
             </p>
           </div>
-          <a href="#" className="text-sm font-medium hover:opacity-70 transition-opacity">
+          <a href="#magaza" className="text-sm font-medium hover:opacity-70 transition-opacity">
             Kreslolara Bax
           </a>
         </motion.div>
