@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Plus, Clock } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import type { Faq } from '@/lib/data/types';
 import { motion } from 'framer-motion';
 
@@ -50,10 +50,6 @@ export default function FaqSection({ faqs }: { faqs: Faq[] }) {
           <p className="text-neutral-600 mb-8 max-w-md leading-relaxed">
             Mebel seçimi, ölçülər və ya materiallarla bağlı suallarınız var? Bizə yazın, komandamız dərhal köməklik göstərsin.
           </p>
-          <div className="flex items-center gap-2 text-xs tracking-wider text-neutral-600 uppercase">
-            <Clock className="w-4 h-4" />
-            <span>Studio 1 iş günü ərzində cavablandırır</span>
-          </div>
           <Link href="/suallar" className="inline-block mt-8 text-sm font-semibold underline underline-offset-4 hover:opacity-70 transition-opacity">
             Bütün suallara bax &rarr;
           </Link>

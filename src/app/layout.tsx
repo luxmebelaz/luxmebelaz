@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Manrope, Oswald } from "next/font/google";
+import { Noto_Sans, Oswald } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import SearchDialog from "@/components/SearchDialog";
+import ScrollToTop from "@/components/ScrollToTop";
 import { site } from "@/lib/site";
 
 // "latin-ext" olmadan ə, ı, ş, ç, ğ, ö, ü kimi Azərbaycan hərfləri başqa şriftə düşür.
-const manrope = Manrope({
-  variable: "--font-manrope",
+const notoSans = Noto_Sans({
+  variable: "--font-noto",
   subsets: ["latin", "latin-ext"],
 });
 
@@ -37,13 +40,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="az"
-      className={`${manrope.variable} ${oswald.variable} h-full antialiased`}
+      className={`${notoSans.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll>
+          <ScrollToTop />
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
+          <CartDrawer />
+          <SearchDialog />
         </SmoothScroll>
       </body>
     </html>

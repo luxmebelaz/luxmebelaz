@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Check, Clock, Mail, Phone } from 'lucide-react';
+import { Check, Mail, Phone } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import { site } from '@/lib/site';
 
@@ -41,10 +41,6 @@ export default function ContactSection() {
               <span className="font-bold break-all">{site.email}</span>
             </a>
 
-            <div className="flex items-center gap-3 mt-2 px-1">
-              <Clock className="w-5 h-5 text-neutral-700 shrink-0" />
-              <span className="text-xs uppercase tracking-wide text-neutral-700">Mütəxəssislərimiz sizə 4 saat ərzində geri dönüş edəcək.</span>
-            </div>
             <Link href="/elaqe" className="text-sm font-semibold underline underline-offset-4 px-1 self-start">
               Xəritə və bütün əlaqə məlumatları →
             </Link>

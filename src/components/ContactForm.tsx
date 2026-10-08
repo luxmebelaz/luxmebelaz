@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Clock, Loader2 } from 'lucide-react';
+import { ChevronDown, Loader2 } from 'lucide-react';
 
 const fieldClass =
   'w-full bg-white/35 border border-white/50 rounded-xl p-4 text-[15px] text-neutral-900 placeholder:text-neutral-500 outline-none focus:border-black/50 focus:bg-white/50 transition-colors';
@@ -106,11 +106,6 @@ export default function ContactForm() {
           Göndərməklə <Link href="/mexfilik" className="underline underline-offset-2">məxfilik siyasəti</Link> və{' '}
           <Link href="/sertler" className="underline underline-offset-2">istifadə şərtləri</Link> ilə razılaşırsınız.
         </label>
-      </div>
-
-      <div className="flex items-start gap-3 text-xs uppercase tracking-wide text-neutral-700">
-        <Clock className="w-4 h-4 shrink-0 mt-0.5" />
-        <span>Dizaynerlə zəng üçün 4 saat ərzində sizinlə əlaqə saxlayacağıq.</span>
       </div>
 
       <button

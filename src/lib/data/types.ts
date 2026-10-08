@@ -22,19 +22,4 @@ export type Product = {
   featured?: boolean;
 };
 
-export type PostSection = { heading: string; paragraphs: string[] };
-
-export type Post = {
-  slug: string;
-  category: string;
-  date: string; // ISO
-  dateLabel: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  imageAlt: string;
-  readMinutes: number;
-  sections: PostSection[];
-};
-
 export type Faq = { q: string; a: string };

@@ -4,13 +4,12 @@ import ProductsSection from '@/components/ProductsSection';
 import BannerSection from '@/components/BannerSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import TestimonialSection from '@/components/TestimonialSection';
-import BlogSection from '@/components/BlogSection';
 import FaqSection from '@/components/FaqSection';
 import ContactSection from '@/components/ContactSection';
-import { getFaqs, getFeaturedProducts, getPosts } from '@/lib/repository';
+import { getFaqs, getFeaturedProducts } from '@/lib/repository';
 
 export default async function Home() {
-  const [products, posts, faqs] = await Promise.all([getFeaturedProducts(), getPosts(), getFaqs()]);
+  const [products, faqs] = await Promise.all([getFeaturedProducts(), getFaqs()]);
 
   return (
     <main className="overflow-x-clip bg-[#141414] text-white selection:bg-white/30">
@@ -20,7 +19,6 @@ export default async function Home() {
       <BannerSection />
       <CategoriesSection />
       <TestimonialSection />
-      <BlogSection posts={posts.slice(0, 3)} />
       <FaqSection faqs={faqs.slice(0, 6)} />
       <ContactSection />
     </main>

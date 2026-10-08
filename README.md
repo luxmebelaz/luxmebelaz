@@ -12,7 +12,7 @@ npm run lint
 
 | Qovluq | Məzmun |
 | --- | --- |
-| `src/app/` | Səhifələr (`/magaza`, `/kateqoriyalar`, `/bloq`, `/sebet`, `/sifaris`, `/hesab`, `/elaqe` …) və API (`/api/inquiry`, `/api/orders`) |
+| `src/app/` | Səhifələr (`/magaza`, `/kateqoriyalar`, `/sebet`, `/sifaris`, `/hesab`, `/elaqe` …) və API (`/api/inquiry`, `/api/orders`) |
 | `src/components/` | UI komponentləri (ana səhifə bölmələri, mağaza, səbət, formalar) |
 | `src/lib/site.ts` | Telefon, e-poçt, VÖEN, xəritə, sosial şəbəkə ünvanları |
 | `src/lib/data/` | Nümunə məlumatlar: kateqoriyalar, məhsullar, məqalələr, suallar |
@@ -24,11 +24,11 @@ npm run lint
 
 Qoşulma nöqtələri yalnız bu üç fayldır, səhifələr dəyişməməlidir:
 
-1. `src/lib/repository.ts` — `getProducts`, `getProduct`, `getCategories`, `getPosts`, `getFaqs` funksiyalarının içini Supabase sorğuları ilə əvəz edin. Tiplər `src/lib/data/types.ts`-dədir. Məlumatı `fetch`/DB ilə oxuyanda `"use cache"` istifadə edin və ya `<Suspense>` daxilində saxlayın (`cacheComponents` aktivdir).
+1. `src/lib/repository.ts` — `getProducts`, `getProduct`, `getCategories`, `getFaqs`, `searchCatalog` funksiyalarının içini Supabase sorğuları ilə əvəz edin. Tiplər `src/lib/data/types.ts`-dədir. Məlumatı `fetch`/DB ilə oxuyanda `"use cache"` istifadə edin və ya `<Suspense>` daxilində saxlayın (`cacheComponents` aktivdir).
 2. `src/lib/db.ts` — `saveInquiry` və `saveOrder` hazırda yalnız server jurnalına yazır; `supabase.from('inquiries'|'orders').insert(...)` ilə əvəz edin.
 3. `src/lib/auth.ts` — `registerUser`, `loginUser`, `logoutUser` hazırda brauzer yaddaşında işləyən **demo**dur (başqa cihazda işləmir). Supabase Auth ilə əvəz edin. Sifariş tarixçəsi (`src/lib/orders.ts`) də `orders` cədvəlindən oxunmalıdır.
 
-Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` yalnız server tərəfində istifadə olunmalıdır.
+Cədvəl sxemi `supabase/schema.sql` faylındadır. Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` yalnız server tərəfində istifadə olunmalıdır.
 
 ## imgbb qoşulması
 
@@ -36,4 +36,4 @@ Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE
 
 ## Qeyd
 
-Hazırda məhsul, qiymət, məqalə və rəy məzmunu **nümunədir** — real məlumatla əvəz edin.
+Hazırda məhsul, qiymət və rəy məzmunu **nümunədir** — real məlumatla əvəz edin.

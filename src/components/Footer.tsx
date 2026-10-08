@@ -18,7 +18,6 @@ const columns = [
     title: 'Şirkət',
     links: [
       { label: 'Haqqımızda', href: '/haqqimizda' },
-      { label: 'Bloq', href: '/bloq' },
       { label: 'Əlaqə', href: '/elaqe' },
       { label: 'Suallar', href: '/suallar' },
     ],

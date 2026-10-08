@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Clock } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import PageSection from '@/components/PageSection';
 import FaqList from '@/components/FaqList';
@@ -41,9 +40,6 @@ export default async function FaqPage() {
             <h2 className="text-2xl font-bold leading-tight mb-3">Cavabını tapa bilmədiniz?</h2>
             <p className="text-neutral-700 leading-relaxed mb-6">
               Mebel seçimi, ölçülər və ya materiallarla bağlı suallarınız var? Bizə yazın və ya zəng edin, komandamız köməklik göstərsin.
-            </p>
-            <p className="flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-700 uppercase mb-6">
-              <Clock className="w-4 h-4" /> Studio 1 iş günü ərzində cavablandırır
             </p>
             <div className="flex flex-col gap-3">
               <Link href="/elaqe" className={primaryButton}>Bizə yazın</Link>

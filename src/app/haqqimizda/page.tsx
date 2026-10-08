@@ -6,7 +6,6 @@ import PageHero from '@/components/PageHero';
 import PageSection from '@/components/PageSection';
 import { images } from '@/lib/images';
 import { primaryButton, secondaryButton } from '@/components/ui';
-import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Haqqımızda',
@@ -107,7 +106,7 @@ export default function AboutPage() {
         <div className="glass-light rounded-[32px] p-8 md:p-14 text-center">
           <h2 className="font-display text-4xl md:text-5xl uppercase mb-4">Gəlin birlikdə yaradaq</h2>
           <p className="text-neutral-700 max-w-xl mx-auto mb-8">
-            Layihənizi bizimlə bölüşün — komandamız sizə uyğun həlli təklif etsin. VÖEN: {site.voen}
+            Layihənizi LuxMebel ilə bölüşün — komandamız sizə uyğun həlli təklif etsin.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/elaqe" className={primaryButton}>Bizimlə əlaqə</Link>

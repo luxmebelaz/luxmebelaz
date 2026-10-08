@@ -26,7 +26,6 @@ export const navLinks = [
   { label: 'Ana səhifə', href: '/' },
   { label: 'Mağaza', href: '/magaza' },
   { label: 'Kateqoriyalar', href: '/kateqoriyalar' },
-  { label: 'Bloq', href: '/bloq' },
   { label: 'Haqqımızda', href: '/haqqimizda' },
   { label: 'Əlaqə', href: '/elaqe' },
 ] as const;

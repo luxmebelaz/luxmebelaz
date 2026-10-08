@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Check, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/lib/cart';
+import { panels } from '@/lib/ui';
 import type { Product } from '@/lib/data/types';
 
 type Props = {
@@ -19,6 +19,7 @@ export default function AddToCartButton({ product, variant = 'compact' }: Props)
   const handleAdd = () => {
     add({ slug: product.slug, name: product.name, price: product.price, image: product.image }, qty);
     setAdded(true);
+    panels.openCart();
     window.setTimeout(() => setAdded(false), 2200);
   };
 
@@ -75,11 +76,6 @@ export default function AddToCartButton({ product, variant = 'compact' }: Props)
           {added ? 'Səbətə əlavə olundu' : 'Səbətə əlavə et'}
         </button>
       </div>
-      {added && (
-        <Link href="/sebet" className="text-sm font-semibold underline underline-offset-4 self-start">
-          Səbətə keç →
-        </Link>
-      )}
     </div>
   );
 }

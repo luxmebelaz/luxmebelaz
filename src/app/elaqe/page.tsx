@@ -68,7 +68,7 @@ export default function ContactPage() {
 
           <div className="glass-light rounded-3xl p-5 sm:p-8">
             <h2 className="text-2xl font-bold mb-1">Mesaj göndərin</h2>
-            <p className="text-neutral-700 text-sm mb-6">Sahələri doldurun, 4 saat ərzində sizinlə əlaqə saxlayaq.</p>
+            <p className="text-neutral-700 text-sm mb-6">Sahələri doldurun, sizinlə əlaqə saxlayaq.</p>
             <ContactForm />
           </div>
         </div>

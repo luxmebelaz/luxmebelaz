@@ -14,7 +14,7 @@
   --color-paper: var(--paper);
   --color-paper-soft: var(--paper-soft);
   --color-gold: var(--gold);
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-noto), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-oswald), "Arial Narrow", Impact, sans-serif;
 
   --animate-marquee: marquee 25s linear infinite;
