@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import { ShoppingCart } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ManifestoSection from '@/components/ManifestoSection';
@@ -8,6 +6,9 @@ import BannerSection from '@/components/BannerSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import BlogSection from '@/components/BlogSection';
+import FaqSection from '@/components/FaqSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
@@ -20,6 +21,9 @@ export default function Home() {
       <CategoriesSection />
       <TestimonialSection />
       <BlogSection />
+      <FaqSection />
+      <ContactSection />
+      <Footer />
     </main>
   );
 }
