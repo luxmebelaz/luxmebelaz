@@ -76,8 +76,9 @@ export default function SearchDialog() {
             transition={{ duration: 0.25 }}
             onClick={panels.close}
           />
+          <div className="absolute inset-0 flex items-start justify-center px-4 pt-[14dvh] sm:pt-24 pointer-events-none">
           <motion.div
-            className="absolute left-1/2 top-4 sm:top-24 w-[calc(100%-1.5rem)] max-w-2xl -translate-x-1/2 rounded-3xl bg-gradient-to-b from-[#f0f0f0] to-[#d6d6d6] border border-white/70 shadow-[0_30px_80px_rgba(0,0,0,0.5)] overflow-hidden"
+            className="pointer-events-auto w-full max-w-2xl rounded-3xl bg-gradient-to-b from-[#f0f0f0] to-[#d6d6d6] border border-white/70 shadow-[0_30px_80px_rgba(0,0,0,0.5)] overflow-hidden"
             initial={{ opacity: 0, y: -24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -16 }}
@@ -98,7 +99,7 @@ export default function SearchDialog() {
               </button>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto overscroll-contain p-3">
+            <div className="max-h-[50dvh] sm:max-h-[60vh] overflow-y-auto overscroll-contain p-3">
               {!active && <p className="px-3 py-6 text-center text-sm text-neutral-600">Axtarmaq üçün ən azı 2 hərf yazın.</p>}
               {nothing && <p className="px-3 py-6 text-center text-sm text-neutral-700">“{q}” üzrə heç nə tapılmadı.</p>}
 
@@ -132,6 +133,7 @@ export default function SearchDialog() {
               )}
             </div>
           </motion.div>
+          </div>
         </div>
       )}
     </AnimatePresence>

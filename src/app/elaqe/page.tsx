@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ExternalLink, FileText, Mail, MapPin, Phone } from 'lucide-react';
+import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import PageSection from '@/components/PageSection';
 import ContactForm from '@/components/ContactForm';
@@ -46,13 +46,6 @@ export default function ContactPage() {
                 <span className="flex items-center gap-2 text-lg font-extrabold">Google Xəritədə aç <ExternalLink className="w-4 h-4" /></span>
               </span>
             </a>
-            <div className={`${cardClass} hover:brightness-100`}>
-              <span className="w-12 h-12 rounded-full bg-[#111] text-white flex items-center justify-center shrink-0"><FileText className="w-5 h-5" /></span>
-              <span>
-                <span className="block text-xs font-bold uppercase tracking-wider text-neutral-600">VÖEN</span>
-                <span className="block text-lg font-extrabold">{site.voen}</span>
-              </span>
-            </div>
 
             <div className="relative rounded-3xl overflow-hidden border-[3px] border-white/60 shadow-[0_18px_40px_rgba(0,0,0,0.25)] bg-[#bdbdbd] h-[320px] sm:h-[400px] mt-2">
               <iframe

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import LegalPage from '@/components/LegalPage';
-import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'İstifadə şərtləri',
@@ -17,7 +16,7 @@ export default function TermsPage() {
         {
           heading: 'Ümumi müddəalar',
           paragraphs: [
-            `Bu sayt VÖEN: ${site.voen} olan LuxMebel tərəfindən idarə olunur. Saytdakı məlumatlar məhsulların və xidmətlərin təqdimatı məqsədi daşıyır.`,
+            'Bu sayt LuxMebel tərəfindən idarə olunur. Saytdakı məlumatlar məhsulların və xidmətlərin təqdimatı məqsədi daşıyır.',
           ],
         },
         {
