@@ -39,9 +39,9 @@ export default function FaqSection({ faqs }: { faqs: Faq[] }) {
           className="flex-1 md:pr-16"
         >
           <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-neutral-800">
-            Bilməyiniz Faydalıdır
+            Bilməyiniz faydalıdır
           </h4>
-          <p className="font-display text-[40px] sm:text-6xl md:text-7xl uppercase leading-none mb-12">
+          <p className="font-display text-[34px] sm:text-5xl md:text-6xl uppercase leading-none mb-12">
             Suallar
           </p>
           <h2 className="text-4xl md:text-5xl font-normal tracking-[-0.03em] leading-[1.05] mb-8">
@@ -92,7 +92,7 @@ export default function FaqSection({ faqs }: { faqs: Faq[] }) {
                   className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-6 pb-6 text-neutral-600 text-[15px] leading-relaxed">{faq.a}</p>
+                    <p className="px-6 pb-6 text-neutral-600 text-[14px] leading-relaxed">{faq.a}</p>
                   </div>
                 </div>
               </motion.div>

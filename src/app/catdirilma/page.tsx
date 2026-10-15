@@ -22,7 +22,7 @@ export default function DeliveryPage() {
         {
           heading: 'Çatdırılma müddəti',
           paragraphs: [
-            'Çatdırılma müddəti məhsulun stokda olub-olmamasından, sifarişin növündən (standart və ya fərdi sifariş) və ünvandan asılıdır. Dəqiq müddət sifarişin təsdiqi zamanı sizə bildirilir.',
+            'Çatdırılma müddəti məhsulun anbarda olub-olmamasından, sifarişin növündən (standart və ya fərdi sifariş) və ünvandan asılıdır. Dəqiq müddət sifarişin təsdiqi zamanı sizə bildirilir.',
           ],
         },
         {

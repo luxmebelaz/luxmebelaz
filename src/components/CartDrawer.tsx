@@ -81,7 +81,7 @@ export default function CartDrawer() {
                       </Link>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-2">
-                          <Link href={`/magaza/${item.slug}`} onClick={panels.close} className="font-bold text-[15px] leading-tight hover:underline">{item.name}</Link>
+                          <Link href={`/magaza/${item.slug}`} onClick={panels.close} className="font-bold text-[14px] leading-tight hover:underline">{item.name}</Link>
                           <button type="button" onClick={() => remove(item.slug)} aria-label={`${item.name} məhsulunu sil`} className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center hover:bg-black/10">
                             <Trash2 className="w-4 h-4" />
                           </button>

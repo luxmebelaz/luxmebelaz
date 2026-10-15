@@ -39,7 +39,7 @@ export default function LegalPage({
         </div>
         <div className="glass-light rounded-3xl p-6 mt-12">
           <p className="font-bold mb-1">Sualınız var?</p>
-          <p className="text-neutral-700 text-[15px]">
+          <p className="text-neutral-700 text-[14px]">
             Bizimlə əlaqə saxlayın: <a href={site.phoneHref} className="font-semibold underline">{site.phone}</a>,{' '}
             <a href={site.emailHref} className="font-semibold underline">{site.email}</a> və ya{' '}
             <Link href="/elaqe" className="font-semibold underline">əlaqə səhifəsi</Link>.

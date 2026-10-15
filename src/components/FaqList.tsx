@@ -31,7 +31,7 @@ export default function FaqList({ faqs }: { faqs: Faq[] }) {
               className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
               <div className="overflow-hidden">
-                <p className="px-5 sm:px-6 pb-6 text-neutral-700 text-[15px] leading-relaxed">{faq.a}</p>
+                <p className="px-5 sm:px-6 pb-6 text-neutral-700 text-[14px] leading-relaxed">{faq.a}</p>
               </div>
             </div>
           </div>

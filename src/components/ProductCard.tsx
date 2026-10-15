@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
         {!product.inStock && (
-          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-xs font-semibold">Stokda yoxdur</span>
+          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 text-xs font-semibold">Mövcud deyil</span>
         )}
       </Link>
       <div className="flex flex-1 flex-col justify-between gap-5 p-5 sm:p-6">

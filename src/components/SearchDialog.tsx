@@ -50,7 +50,7 @@ export default function SearchDialog() {
       } catch {
         // sorğu ləğv olunub və ya şəbəkə xətası — nəticələr dəyişmir
       } finally {
-        if (!controller.signal.aborted) setLoading(false);
+        setLoading(false);
       }
     }, 220);
     return () => {

@@ -1,7 +1,7 @@
 'use client';
 
 // Müştərinin öz brauzerində saxlanan sifariş tarixçəsi ("Hesabım" səhifəsi üçün).
-// Supabase qoşulanda bu, orders cədvəlindən oxunan sorğu ilə əvəz olunacaq.
+// Daxil olmamış istifadəçi və ya Supabase əlçatmaz olduqda istifadə olunur (AccountView əvvəlcə orders cədvəlindən oxuyur).
 import { useSyncExternalStore } from 'react';
 
 export type StoredOrder = {

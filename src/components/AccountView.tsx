@@ -87,7 +87,7 @@ export default function AccountView() {
           )}
           <h2 className="text-xl font-bold">Profil</h2>
         </div>
-        <dl className="flex flex-col gap-4 text-[15px]">
+        <dl className="flex flex-col gap-4 text-[14px]">
           <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Ad, soyad</dt><dd className="font-semibold">{user.name}</dd></div>
           <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">E-poçt</dt><dd className="font-semibold break-all">{user.email}</dd></div>
           {user.phone && (

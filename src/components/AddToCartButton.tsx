@@ -26,7 +26,7 @@ export default function AddToCartButton({ product, variant = 'compact' }: Props)
   if (!product.inStock) {
     return (
       <span className="inline-flex items-center justify-center h-11 px-5 rounded-full bg-black/10 text-sm font-semibold text-neutral-600">
-        Stokda yoxdur
+        Mövcud deyil
       </span>
     );
   }
@@ -40,7 +40,7 @@ export default function AddToCartButton({ product, variant = 'compact' }: Props)
         className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-full bg-white text-black text-sm font-semibold whitespace-nowrap hover:bg-[#e4d093] transition-colors"
       >
         {added ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
-        {added ? 'Əlavə olundu' : 'Səbətə at'}
+        {added ? 'Əlavə olundu' : 'Əlavə et'}
       </button>
     );
   }

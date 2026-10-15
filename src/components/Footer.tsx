@@ -61,10 +61,10 @@ export default function Footer() {
           {/* Left Side */}
           <div className="max-w-sm">
             <Link href="/" className="inline-block text-3xl font-extrabold tracking-tight mb-4">LuxMebel</Link>
-            <p className="text-neutral-700 mb-6 leading-relaxed text-[15px]">
-              Eviniz üçün modern və klassik üslubun mükəmməl ahəngini yaradan, komfortlu və keyfiyyətli mebellər.
+            <p className="text-neutral-700 mb-6 leading-relaxed text-[14px]">
+              Eviniz üçün modern və klassik üslubun mükəmməl ahəngini yaradan, rahat və keyfiyyətli mebellər.
             </p>
-            <ul className="flex flex-col gap-3 text-[15px] mb-6">
+            <ul className="flex flex-col gap-3 text-[14px] mb-6">
               <li>
                 <a href={site.phoneHref} className="flex items-center gap-3 font-semibold hover:opacity-70 transition-opacity">
                   <Phone className="w-4 h-4 shrink-0" /> {site.phone}
@@ -104,7 +104,7 @@ export default function Footer() {
             {columns.map((col) => (
               <div key={col.title}>
                 <h4 className="text-xs font-bold tracking-[0.18em] uppercase mb-5">{col.title}</h4>
-                <ul className="flex flex-col gap-3.5 text-[15px] text-neutral-700">
+                <ul className="flex flex-col gap-3.5 text-[14px] text-neutral-700">
                   {col.links.map((link) => (
                     <li key={link.href}><Link href={link.href} className="hover:text-black transition-colors">{link.label}</Link></li>
                   ))}

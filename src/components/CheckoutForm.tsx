@@ -108,7 +108,8 @@ export default function CheckoutForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:gap-8 items-start">
+    // key: hesab yüklənəndə sahələr istifadəçinin məlumatları ilə yenidən doldurulur
+    <form key={user?.id ?? 'guest'} onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:gap-8 items-start">
       <div className="glass-light rounded-3xl p-5 sm:p-8 flex flex-col gap-5">
         <h2 className="text-xl font-bold">Çatdırılma məlumatları</h2>
 
@@ -147,7 +148,7 @@ export default function CheckoutForm() {
             {payments.map((p, i) => (
               <label key={p.key} className="flex items-center gap-3 rounded-xl bg-white/35 border border-white/50 p-4 cursor-pointer has-[:checked]:border-black has-[:checked]:bg-white/60">
                 <input type="radio" name="payment" value={p.key} defaultChecked={i === 0} className="w-4 h-4 accent-black" />
-                <span className="font-semibold text-[15px]">{p.label}</span>
+                <span className="font-semibold text-[14px]">{p.label}</span>
               </label>
             ))}
           </div>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
@@ -8,13 +7,15 @@ import { Check, Phone, Truck, ShieldCheck } from 'lucide-react';
 import PageSection from '@/components/PageSection';
 import AddToCartButton from '@/components/AddToCartButton';
 import ProductCard from '@/components/ProductCard';
+import ProductGallery from '@/components/ProductGallery';
 import { formatPrice } from '@/lib/format';
 import { getCategory, getProduct, getProducts, getRelatedProducts } from '@/lib/repository';
 import { site } from '@/lib/site';
 
 export async function generateStaticParams() {
   const products = await getProducts();
-  return products.map((p) => ({ slug: p.slug }));
+  // cacheComponents ən azı bir parametr tələb edir; kataloq boşdursa, yer tutucu notFound() qaytarır
+  return products.length > 0 ? products.map((p) => ({ slug: p.slug })) : [{ slug: '__bos__' }];
 }
 
 export async function generateMetadata({ params }: PageProps<'/magaza/[slug]'>): Promise<Metadata> {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<'/magaza/[slug]'>):
   return {
     title: product.name,
     description: `${product.name} — ${product.summary}. Qiymət: ${formatPrice(product.price)}.`,
-    openGraph: { images: [product.image] },
+    openGraph: { images: product.images.slice(0, 1) },
   };
 }
 
@@ -40,7 +41,7 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
     '@type': 'Product',
     name: product.name,
     description: product.description,
-    image: product.image,
+    image: product.images,
     brand: { '@type': 'Brand', name: site.name },
     offers: {
       '@type': 'Offer',
@@ -73,9 +74,7 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
-            <div className="relative aspect-[4/4.4] rounded-3xl overflow-hidden bg-[#b5aba0] shadow-[0_24px_60px_rgba(0,0,0,0.25)]">
-              <Image src={product.image} alt={product.imageAlt} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-            </div>
+            <ProductGallery images={product.images} alt={product.imageAlt} />
 
             <div>
               {category && (
@@ -83,12 +82,12 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
                   {category.name}
                 </Link>
               )}
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl uppercase leading-[1.05] mb-4">{product.name}</h1>
+              <h1 className="font-display text-4xl sm:text-5xl uppercase leading-[1.05] mb-4">{product.name}</h1>
               <p className="text-neutral-700 text-lg mb-6">{product.summary}</p>
 
-              <p className="text-4xl font-extrabold mb-1">{formatPrice(product.price)}</p>
+              <p className="text-3xl font-extrabold mb-1">{formatPrice(product.price)}</p>
               <p className={`text-sm font-semibold mb-7 ${product.inStock ? 'text-emerald-800' : 'text-red-700'}`}>
-                {product.inStock ? 'Stokda var' : 'Stokda yoxdur'}
+                {product.inStock ? 'Satışda mövcuddur' : 'Hazırda mövcud deyil'}
               </p>
 
               <AddToCartButton product={product} variant="full" />
@@ -97,11 +96,11 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
                 <Phone className="w-4 h-4" /> Sual var? Zəng edin: {site.phone}
               </a>
 
-              <p className="text-neutral-800 leading-relaxed mt-8 mb-6">{product.description}</p>
+              {product.description && <p className="text-neutral-800 leading-relaxed whitespace-pre-line mt-8 mb-6">{product.description}</p>}
 
               <ul className="flex flex-col gap-2.5 mb-8">
                 {product.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-[15px]">
+                  <li key={f} className="flex items-start gap-3 text-[14px]">
                     <Check className="w-5 h-5 shrink-0 mt-0.5 text-neutral-900" /> {f}
                   </li>
                 ))}
@@ -111,7 +110,7 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
                 {product.specs.map((s) => (
                   <div key={s.label}>
                     <dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">{s.label}</dt>
-                    <dd className="font-semibold text-[15px]">{s.value}</dd>
+                    <dd className="font-semibold text-[14px]">{s.value}</dd>
                   </div>
                 ))}
               </dl>

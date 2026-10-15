@@ -4,7 +4,6 @@ export type Category = {
   name: string;
   tagline: string;
   description: string;
-  image: string;
 };
 
 export type Product = {
@@ -14,12 +13,16 @@ export type Product = {
   price: number; // AZN
   summary: string;
   description: string;
-  image: string;
+  image: string; // əsas şəkil (images[0])
+  images: string[];
   imageAlt: string;
   features: string[];
   specs: { label: string; value: string }[];
   inStock: boolean;
-  featured?: boolean;
+  featured: boolean; // ana səhifə — "Məhsullarımız" bölməsi
+  isNew: boolean; // ana səhifə — "Yeni gələnlər" bölməsi
+  sortOrder: number;
+  createdAt: string;
 };
 
 export type Faq = { q: string; a: string };

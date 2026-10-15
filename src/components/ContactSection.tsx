@@ -15,10 +15,10 @@ export default function ContactSection() {
     <section id="elaqe" className="bg-paper text-black py-16 md:py-20 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         <h4 className="text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-neutral-800">
-          Bizimlə Əlaqə
+          Bizimlə əlaqə
         </h4>
-        <h2 className="font-display text-[42px] sm:text-6xl md:text-7xl uppercase leading-none mb-10 md:mb-14">
-          Gəlin Danışaq
+        <h2 className="font-display text-[36px] sm:text-5xl md:text-6xl uppercase leading-none mb-10 md:mb-14">
+          Gəlin danışaq
         </h2>
 
         <div className="flex flex-col md:flex-row gap-10 md:gap-8">

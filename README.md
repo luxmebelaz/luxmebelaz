@@ -1,6 +1,6 @@
 # LuxMebel
 
-Next.js (App Router) ilə hazırlanmış mebel mağazası saytı. Dil: Azərbaycan.
+Next.js (App Router) ilə hazırlanmış mebel mağazası saytı. Dil: Azərbaycan. Ünvan: https://luxmebelaz.com
 
 ```bash
 npm run dev     # inkişaf
@@ -13,27 +13,27 @@ npm run lint
 | Qovluq | Məzmun |
 | --- | --- |
 | `src/app/` | Səhifələr (`/magaza`, `/kateqoriyalar`, `/sebet`, `/sifaris`, `/hesab`, `/elaqe` …) və API (`/api/inquiry`, `/api/orders`) |
-| `src/components/` | UI komponentləri (ana səhifə bölmələri, mağaza, səbət, formalar) |
+| `src/app/admin/` | İdarəetmə paneli: məhsul əlavə et / redaktə et / sil, ana səhifə bölmələri |
+| `src/components/` | UI komponentləri (ana səhifə bölmələri, mağaza, səbət, formalar, `admin/`) |
 | `src/lib/site.ts` | Telefon, e-poçt, VÖEN, xəritə, sosial şəbəkə ünvanları |
-| `src/lib/data/` | Nümunə məlumatlar: kateqoriyalar, məhsullar, məqalələr, suallar |
-| `src/lib/repository.ts` | **Bütün məlumat oxuması buradan keçir** |
+| `src/lib/data/` | Sabit məlumatlar: kateqoriyalar, suallar |
+| `src/lib/repository.ts` | **Bütün ictimai məlumat oxuması buradan keçir** (məhsullar Supabase-dən, keşlə) |
 | `src/lib/db.ts` | **Server tərəfi yazma (sorğu, sifariş)** |
-| `src/lib/auth.ts` | Hesab (hazırda yerli demo) |
+| `src/lib/auth.ts` | Hesab (Supabase Auth: e-poçt + Google) |
+| `src/lib/admin.ts` | Admin icazəsinin yoxlanması (`ADMIN_EMAILS`) |
 
-## Supabase qoşulması
+## Supabase
 
-Qoşulma nöqtələri yalnız bu üç fayldır, səhifələr dəyişməməlidir:
+SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql`.
 
-1. `src/lib/repository.ts` — `getProducts`, `getProduct`, `getCategories`, `getFaqs`, `searchCatalog` funksiyalarının içini Supabase sorğuları ilə əvəz edin. Tiplər `src/lib/data/types.ts`-dədir. Məlumatı `fetch`/DB ilə oxuyanda `"use cache"` istifadə edin və ya `<Suspense>` daxilində saxlayın (`cacheComponents` aktivdir).
-2. `src/lib/db.ts` — `saveInquiry` və `saveOrder` (service role açarı olmadıqda yalnız server jurnalına yazır).
-3. `src/lib/auth.ts` — Supabase Auth ilə işləyir (e-poçt+şifrə, Google, şifrə bərpası). `/auth/callback` marşrutu Google/e-poçt təsdiqini sessiyaya çevirir. Cədvəllər üçün `supabase/schema.sql`, sonra `supabase/auth.sql` işlədin. `src/lib/db.ts` `SUPABASE_SERVICE_ROLE_KEY` varsa sifariş və sorğuları bazaya yazır.
+- Məhsullar `products` cədvəlindədir və yalnız admin paneldən dəyişdirilir (yazma serverdə, service role açarı ilə).
+- Kataloq `"use cache"` + `cacheTag('catalog')` ilə keşlənir; admin paneldə hər dəyişiklik `updateTag('catalog')` çağırır, sayt dərhal yenilənir.
+- Admin hesabı Supabase → Authentication → Users → **Add user** ilə yaradılır; e-poçt `ADMIN_EMAILS`-də olmalıdır.
 
-Cədvəl sxemi `supabase/schema.sql` faylındadır. Mühit dəyişənləri üçün `.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` yalnız server tərəfində istifadə olunmalıdır.
+## imgbb
 
-## imgbb qoşulması
+Admin paneldə seçilən şəkil brauzerdə kiçildilir (maks. 2000 px, JPEG), `/api/admin/upload` marşrutu ilə imgbb-yə göndərilir və `https://i.ibb.co/...` ünvanı məhsulun `images` sahəsinə yazılır. `IMGBB_API_KEY` yalnız serverdədir.
 
-`next.config.ts`-də `i.ibb.co` şəkil mənbəyi olaraq icazəlidir. imgbb-yə yüklənmiş şəkilin birbaşa ünvanını (`https://i.ibb.co/...`) məhsulun `image` sahəsinə yazmaq kifayətdir. Yükləmə (API açarı ilə) yalnız server marşrutunda aparılmalıdır.
+## Mühit dəyişənləri
 
-## Qeyd
-
-Hazırda məhsul, qiymət və rəy məzmunu **nümunədir** — real məlumatla əvəz edin.
+`.env.example` faylına baxın. `SUPABASE_SERVICE_ROLE_KEY` və `IMGBB_API_KEY` heç vaxt `NEXT_PUBLIC_` ilə başlamamalıdır.

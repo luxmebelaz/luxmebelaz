@@ -12,8 +12,8 @@ export const site = {
   map: {
     lat: 40.4583542,
     lng: 49.7324028,
-    openUrl: 'https://www.google.com/maps?q=40.4583542,49.7324028&z=17&hl=tr',
-    embedUrl: 'https://www.google.com/maps?q=40.4583542,49.7324028&z=17&hl=tr&output=embed',
+    openUrl: 'https://www.google.com/maps?q=40.4583542,49.7324028&z=17&hl=az',
+    embedUrl: 'https://www.google.com/maps?q=40.4583542,49.7324028&z=17&hl=az&output=embed',
   },
   // Sosial şəbəkə ünvanlarını burada real hesablarla əvəz edin.
   social: {

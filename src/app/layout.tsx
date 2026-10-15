@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans, Oswald } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
-import SearchDialog from "@/components/SearchDialog";
-import ScrollToTop from "@/components/ScrollToTop";
+import SiteChrome from "@/components/SiteChrome";
 import { site } from "@/lib/site";
 
 // "latin-ext" olmadan ə, ı, ş, ç, ğ, ö, ü kimi Azərbaycan hərfləri başqa şriftə düşür.
@@ -23,7 +19,7 @@ const oswald = Oswald({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "LuxMebel — Eleqant və Müasir Mebellər",
+    default: "LuxMebel — zərif və müasir mebellər",
     template: "%s | LuxMebel",
   },
   description: site.description,
@@ -31,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     locale: "az_AZ",
-    title: "LuxMebel — Eleqant və Müasir Mebellər",
+    title: "LuxMebel — zərif və müasir mebellər",
     description: site.description,
   },
 };
@@ -44,12 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll>
-          <ScrollToTop />
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
-          <CartDrawer />
-          <SearchDialog />
+          <SiteChrome>{children}</SiteChrome>
         </SmoothScroll>
       </body>
     </html>

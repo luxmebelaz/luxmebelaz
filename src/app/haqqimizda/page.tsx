@@ -1,22 +1,14 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Gem, Hammer, Handshake, Ruler, Truck, MessageSquare } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import PageSection from '@/components/PageSection';
-import { images } from '@/lib/images';
 import { primaryButton, secondaryButton } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Haqqımızda',
   description: 'LuxMebel — klassik və müasir dizaynı birləşdirən mebel brendi. Fəlsəfəmiz, dəyərlərimiz və iş prosesimiz.',
 };
-
-const stats = [
-  { value: '500+', label: 'Unikal model' },
-  { value: '15+', label: 'İllik ustalıq' },
-  { value: '99%', label: 'Məmnun müştəri' },
-];
 
 const values = [
   { icon: Gem, title: 'Keyfiyyət', text: 'Yüksək keyfiyyətli material və diqqətlə seçilmiş detallar — mebel illərlə xidmət etməlidir.' },
@@ -36,36 +28,25 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="LuxMebel Fəlsəfəsi"
+        eyebrow="LuxMebel fəlsəfəsi"
         title="Haqqımızda"
-        description="Rahatlığın və eleqantlığın təcəssümü: biz sadəcə mebel yaratmırıq — evinizi estetik bir incəsənət əsərinə çevirməyə kömək edirik."
+        description="Rahatlığın və zərifliyin təcəssümü: biz sadəcə mebel yaratmırıq — evinizi estetik bir incəsənət əsərinə çevirməyə kömək edirik."
         crumbs={[{ label: 'Haqqımızda' }]}
       />
 
       <PageSection>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-          <div className="relative aspect-[4/3.2] rounded-3xl overflow-hidden bg-[#b5aba0] shadow-[0_24px_60px_rgba(0,0,0,0.25)]">
-            <Image src={images.about.story} alt="İşıqlı və səliqəli qonaq otağı" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-6 lg:gap-14 items-start">
+          <h2 className="font-display text-4xl md:text-5xl uppercase leading-[1.05]">Klassik zəriflik, müasir rahatlıq</h2>
           <div>
-            <h2 className="font-display text-4xl md:text-5xl uppercase leading-[1.05] mb-5">Klassik zəriflik, müasir rahatlıq</h2>
             <p className="text-neutral-800 leading-relaxed mb-4">
-              LuxMebel klassik və müasir üslubun mükəmməl ahəngini yaradan, komfortlu və keyfiyyətli mebellər təqdim edir.
+              LuxMebel klassik və müasir üslubun mükəmməl ahəngini yaradan, rahat və keyfiyyətli mebellər təqdim edir.
               Kolleksiyamızda qonaq otağı divanlarından yataq otağı dəstlərinə, nahar masalarından saxlama həllərinə qədər
               evin hər guşəsi üçün seçimlər var.
             </p>
-            <p className="text-neutral-800 leading-relaxed mb-8">
+            <p className="text-neutral-800 leading-relaxed">
               Hər detal diqqətlə seçilir və fərdi yanaşma ilə hazırlanır ki, eviniz həm funksional, həm də gözəl olsun.
               İstəyiniz standart modeldən kənardırsa, fərdi sifariş imkanları ilə sizə kömək edirik.
             </p>
-            <div className="grid grid-cols-3 gap-3">
-              {stats.map((s) => (
-                <div key={s.label} className="glass-light rounded-2xl py-5 px-2 text-center">
-                  <p className="font-display text-4xl sm:text-5xl leading-none">{s.value}</p>
-                  <p className="text-xs sm:text-sm font-semibold mt-2">{s.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </PageSection>

@@ -15,7 +15,7 @@ export default async function StorePage() {
   return (
     <>
       <PageHero
-        eyebrow="Mebel Kolleksiyası"
+        eyebrow="Mebel kolleksiyası"
         title="Mağaza"
         description="Evinizin hər otağı üçün düşünülmüş mebellər. Kateqoriyaya görə süzün, axtarın və bəyəndiyinizi səbətə əlavə edin."
         crumbs={[{ label: 'Mağaza' }]}

@@ -42,7 +42,7 @@ export default function CategoriesSection() {
           <Sofa className="w-8 h-8 mb-4" strokeWidth={1.5} />
           <div>
             <h3 className="font-display text-4xl uppercase mb-3">Divanlar</h3>
-            <p className="text-neutral-800 text-[15px] leading-relaxed mb-6">
+            <p className="text-neutral-800 text-[14px] leading-relaxed mb-6">
               Qonaq otağınız üçün müasir və klassik dizaynlı, erqonomik divanlar. Həm rahatlıq, həm də estetika axtaranlar üçün.
             </p>
           </div>
@@ -61,7 +61,7 @@ export default function CategoriesSection() {
           <BedDouble className="w-8 h-8 mb-4 text-gold relative z-10" strokeWidth={1.5} />
           <div className="relative z-10">
             <h3 className="font-display text-4xl uppercase mb-3">Yataq Otağı</h3>
-            <p className="text-neutral-300 text-[15px] leading-relaxed mb-6">
+            <p className="text-neutral-300 text-[14px] leading-relaxed mb-6">
               Günün yorğunluğunu ata biləcəyiniz, keyfiyyətli taxta və materiallardan hazırlanmış yataq mebelləri.
             </p>
           </div>
@@ -79,7 +79,7 @@ export default function CategoriesSection() {
           <Armchair className="w-8 h-8 mb-4" strokeWidth={1.5} />
           <div>
             <h3 className="font-display text-4xl uppercase mb-3">Kreslolar</h3>
-            <p className="text-neutral-800 text-[15px] leading-relaxed mb-6">
+            <p className="text-neutral-800 text-[14px] leading-relaxed mb-6">
               Rahatlığınız üçün fərdi toxunuşlar. Otağınıza xüsusi rəng qatacaq lüks kreslo kolleksiyası.
             </p>
           </div>

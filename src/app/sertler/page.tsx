@@ -22,7 +22,7 @@ export default function TermsPage() {
         {
           heading: 'Məhsul məlumatları və qiymətlər',
           paragraphs: [
-            'Məhsul şəkilləri, təsvirləri və qiymətləri mümkün qədər dəqiq verilir, lakin rəng və ölçülərdə cüzi fərqlər ola bilər. Qiymətlər və stok vəziyyəti əvvəlcədən xəbərdarlıq edilmədən dəyişdirilə bilər.',
+            'Məhsul şəkilləri, təsvirləri və qiymətləri mümkün qədər dəqiq verilir, lakin rəng və ölçülərdə cüzi fərqlər ola bilər. Qiymətlər və məhsulun mövcudluğu əvvəlcədən xəbərdarlıq edilmədən dəyişdirilə bilər.',
           ],
         },
         {

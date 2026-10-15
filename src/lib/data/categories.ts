@@ -1,6 +1,7 @@
-import { unsplash } from '@/lib/images';
 import type { Category } from './types';
 
+// Kateqoriyalar sabitdir. Yeni kateqoriya əlavə edəndə eyni slug-ı supabase/catalog.sql-də də əlavə edin
+// (products.category sütunu categories cədvəlinə istinad edir).
 export const categories: Category[] = [
   {
     slug: 'divanlar',
@@ -8,23 +9,20 @@ export const categories: Category[] = [
     tagline: 'Qonaq otağının əsas aksenti',
     description:
       'Qonaq otağınız üçün müasir və klassik dizaynlı, erqonomik divanlar. Həm rahatlıq, həm də estetika axtaranlar üçün.',
-    image: unsplash('1555041469-a586c61ea9bc'),
   },
   {
     slug: 'yataq-otagi',
-    name: 'Yataq Otağı',
+    name: 'Yataq otağı',
     tagline: 'Dincəlmək üçün düşünülmüş dizayn',
     description:
-      'Günün yorğunluğunu ata biləcəyiniz, keyfiyyətli taxta və materiallardan hazırlanmış yataq mebelləri.',
-    image: unsplash('1616594039964-ae9021a400a0'),
+      'Günün yorğunluğunu ata biləcəyiniz, keyfiyyətli taxta və materiallardan hazırlanmış yataq otağı mebelləri.',
   },
   {
     slug: 'kreslolar',
     name: 'Kreslolar',
-    tagline: 'Fərdi toxunuşlar və rahatlıq',
+    tagline: 'Fərdi toxunuş və rahatlıq',
     description:
-      'Rahatlığınız üçün fərdi toxunuşlar. Otağınıza xüsusi rəng qatacaq lüks kreslo və stul kolleksiyası.',
-    image: unsplash('1586023492125-27b2c045efd7'),
+      'Otağınıza xüsusi rəng qatacaq kreslo və stul kolleksiyası.',
   },
   {
     slug: 'masalar',
@@ -32,14 +30,12 @@ export const categories: Category[] = [
     tagline: 'Yemək və iş masaları',
     description:
       'Ailə yeməkləri və qonaqlıqlar üçün təbii materiallardan hazırlanmış nahar və dekorativ masalar.',
-    image: unsplash('1519710164239-da123dc03ef4'),
   },
   {
     slug: 'skaflar',
-    name: 'Şkaf və Komodlar',
+    name: 'Şkaf və komodlar',
     tagline: 'Səliqəli və geniş saxlama',
     description:
       'Geniş həcmli, müasir fasadlı şkaflar, komodlar və rəflər — məkanınızı səliqəli və funksional edir.',
-    image: unsplash('1594026112284-02bb6f3352fe'),
   },
 ];

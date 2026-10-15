@@ -74,7 +74,7 @@ export default function CartView() {
 
       <aside className="glass-light rounded-3xl p-6 lg:sticky lg:top-28">
         <h2 className="text-xl font-bold mb-5">Sifariş xülasəsi</h2>
-        <dl className="flex flex-col gap-3 text-[15px]">
+        <dl className="flex flex-col gap-3 text-[14px]">
           <div className="flex justify-between"><dt className="text-neutral-700">Məhsul sayı</dt><dd className="font-semibold">{count}</dd></div>
           <div className="flex justify-between"><dt className="text-neutral-700">Çatdırılma</dt><dd className="font-semibold text-right">Təsdiq zamanı bildirilir</dd></div>
           <div className="flex justify-between pt-4 mt-1 border-t border-black/10 text-lg"><dt className="font-bold">Cəmi</dt><dd className="font-extrabold">{formatPrice(total)}</dd></div>

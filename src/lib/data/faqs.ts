@@ -3,7 +3,7 @@ import type { Faq } from './types';
 export const faqs: Faq[] = [
   {
     q: 'Çatdırılma nə qədər vaxt aparır?',
-    a: 'Çatdırılma müddəti məhsulun stokda olub-olmamasından və sifarişin növündən asılıdır. Sifarişi təsdiqləyərkən sizə dəqiq tarixi bildiririk.',
+    a: 'Çatdırılma müddəti məhsulun anbarda olub-olmamasından və sifarişin növündən asılıdır. Sifarişi təsdiqləyərkən sizə dəqiq tarixi bildiririk.',
   },
   {
     q: 'Xüsusi sifariş qəbul edirsinizmi?',

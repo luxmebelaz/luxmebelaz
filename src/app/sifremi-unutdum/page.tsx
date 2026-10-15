@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ForgotPage() {
   return (
     <>
-      <PageHero eyebrow="Hesab" title="Şifrəni bərpa et" description="E-poçt ünvanınızı yazın, şifrəni yeniləmək üçün link göndərək." crumbs={[{ label: 'Giriş', href: '/giris' }, { label: 'Şifrəni bərpa et' }]} />
+      <PageHero eyebrow="Hesab" title="Şifrəni bərpa et" description="E-poçt ünvanınızı yazın, şifrəni yeniləmək üçün keçid göndərək." crumbs={[{ label: 'Giriş', href: '/giris' }, { label: 'Şifrəni bərpa et' }]} />
       <PageSection narrow>
         <div className="max-w-xl mx-auto">
           <ForgotForm />

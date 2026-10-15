@@ -3,11 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Loader2 } from 'lucide-react';
-
-const fieldClass =
-  'w-full bg-white/35 border border-white/50 rounded-xl p-4 text-[15px] text-neutral-900 placeholder:text-neutral-500 outline-none focus:border-black/50 focus:bg-white/50 transition-colors';
-
-const labelClass = 'block text-xs font-bold tracking-wider uppercase text-neutral-700 mb-2';
+import { fieldClass, labelClass } from '@/components/ui';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -52,7 +48,6 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       onChange={() => status !== 'idle' && status !== 'sending' && setStatus('idle')}
       className="flex flex-col gap-5"
-      noValidate={false}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>

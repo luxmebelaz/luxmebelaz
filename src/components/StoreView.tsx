@@ -7,16 +7,8 @@ import type { Category, Product } from '@/lib/data/types';
 
 type Sort = 'default' | 'price-asc' | 'price-desc' | 'name';
 
-export default function StoreView({
-  products,
-  categories,
-  initialCategory = 'all',
-}: {
-  products: Product[];
-  categories: Category[];
-  initialCategory?: string;
-}) {
-  const [category, setCategory] = useState(initialCategory);
+export default function StoreView({ products, categories }: { products: Product[]; categories: Category[] }) {
+  const [category, setCategory] = useState('all');
   const [sort, setSort] = useState<Sort>('default');
   const [query, setQuery] = useState('');
 
@@ -41,12 +33,12 @@ export default function StoreView({
   return (
     <div>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-8">
-        <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap" role="tablist" aria-label="Kateqoriya">
-          <button type="button" className={chip(category === 'all')} onClick={() => setCategory('all')}>
+        <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap" role="group" aria-label="Kateqoriya">
+          <button type="button" aria-pressed={category === 'all'} className={chip(category === 'all')} onClick={() => setCategory('all')}>
             Hamısı
           </button>
           {categories.map((c) => (
-            <button key={c.slug} type="button" className={chip(category === c.slug)} onClick={() => setCategory(c.slug)}>
+            <button key={c.slug} type="button" aria-pressed={category === c.slug} className={chip(category === c.slug)} onClick={() => setCategory(c.slug)}>
               {c.name}
             </button>
           ))}

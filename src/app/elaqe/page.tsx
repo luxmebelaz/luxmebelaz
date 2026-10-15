@@ -16,8 +16,8 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Bizimlə Əlaqə"
-        title="Gəlin Danışaq"
+        eyebrow="Bizimlə əlaqə"
+        title="Gəlin danışaq"
         description="Sualınız, sifarişiniz və ya layihəniz var? Zəng edin, yazın və ya forma ilə müraciət edin."
         crumbs={[{ label: 'Əlaqə' }]}
       />

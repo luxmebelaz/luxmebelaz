@@ -8,12 +8,12 @@ import { Gem, Trees, ShieldCheck, Truck, Ruler, Sofa } from 'lucide-react';
 import { images } from '@/lib/images';
 
 const badges = [
-  { icon: Trees, label: 'Təbii Palıd' },
-  { icon: Gem, label: 'Premium Parça' },
-  { icon: ShieldCheck, label: 'Rəsmi Zəmanət' },
-  { icon: Truck, label: 'Rahat Çatdırılma' },
-  { icon: Ruler, label: 'Fərdi Ölçü' },
-  { icon: Sofa, label: 'Əl İşi Karkas' },
+  { icon: Trees, label: 'Təbii ağac' },
+  { icon: Gem, label: 'Premium parça' },
+  { icon: ShieldCheck, label: 'Rəsmi zəmanət' },
+  { icon: Truck, label: 'Çatdırılma' },
+  { icon: Ruler, label: 'Fərdi ölçü' },
+  { icon: Sofa, label: 'Möhkəm karkas' },
 ];
 
 const BrandLogos = () => (
@@ -27,7 +27,7 @@ const BrandLogos = () => (
       {[0, 1].map((copy) => (
         <div key={copy} className="flex shrink-0 items-center gap-16 pr-16 min-w-[100vw] justify-around" aria-hidden={copy === 1}>
           {badges.map(({ icon: Icon, label }) => (
-            <span key={label} className="flex items-center gap-3 text-lg font-medium whitespace-nowrap text-white">
+            <span key={label} className="flex items-center gap-3 text-base font-medium whitespace-nowrap text-white">
               <Icon className="w-6 h-6" strokeWidth={1.5} />
               {label}
             </span>
@@ -105,14 +105,14 @@ export default function HeroSection() {
         >
           <motion.h1 
             variants={itemVariants}
-            className="text-6xl md:text-8xl lg:text-[100px] leading-[1.1] font-normal tracking-[-0.03em]"
+            className="text-5xl md:text-7xl lg:text-[84px] leading-[1.08] font-normal tracking-[-0.03em]"
           >
             Məkanınıza<br />
-            Eleqantlıq Qatın
+            zəriflik qatın
           </motion.h1>
           
           <motion.div variants={itemVariants} className="flex flex-col items-start gap-6 max-w-sm pb-4">
-            <p className="text-gray-300 text-lg md:text-xl">
+            <p className="text-gray-300 text-base md:text-lg">
               Klassik və müasir dizaynın mükəmməl harmoniyasını özündə birləşdirən eksklüziv mebel kolleksiyası.
             </p>
             <Link
@@ -138,9 +138,9 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 1 }}
           className="flex justify-between items-center text-xs md:text-sm tracking-widest text-gold mb-8 uppercase"
         >
-          <span>LUXMEBEL KOLLEKSİYASI — EST. 2024</span>
+          <span>LuxMebel kolleksiyası</span>
           <a href="#felsefe" className="flex items-center gap-2 hover:text-white cursor-pointer transition-colors">
-            KƏŞF ET <span>↓</span>
+            Kəşf et <span>↓</span>
           </a>
         </motion.div>
 

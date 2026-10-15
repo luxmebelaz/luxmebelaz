@@ -29,7 +29,7 @@ export default async function FaqPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <PageHero
-        eyebrow="Bilməyiniz Faydalıdır"
+        eyebrow="Bilməyiniz faydalıdır"
         title="Suallar"
         description="Mebellərimiz, sifariş və çatdırılma haqqında ən çox verilən suallara cavablar."
         crumbs={[{ label: 'Suallar' }]}

@@ -1,5 +1,5 @@
 -- LuxMebel üçün Supabase sxemi (SQL Editor-da işlədin).
--- Qeyd: sayt hələ bu cədvəllərə qoşulmayıb; qoşulma src/lib/repository.ts, db.ts, auth.ts-dədir.
+-- Məhsullar (products) bazadan oxunur və admin paneldən idarə olunur; sonra auth.sql və catalog.sql işlədin.
 
 create table if not exists public.categories (
   slug text primary key,
@@ -77,16 +77,23 @@ alter table public.inquiries enable row level security;
 alter table public.orders enable row level security;
 
 -- Kataloq hamıya oxunur
+drop policy if exists "catalog readable" on public.categories;
 create policy "catalog readable" on public.categories for select using (true);
+drop policy if exists "products readable" on public.products;
 create policy "products readable" on public.products for select using (true);
+drop policy if exists "faqs readable" on public.faqs;
 create policy "faqs readable" on public.faqs for select using (true);
 
 -- Profil yalnız sahibinə
+drop policy if exists "own profile read" on public.profiles;
 create policy "own profile read" on public.profiles for select using (auth.uid() = id);
+drop policy if exists "own profile write" on public.profiles;
 create policy "own profile write" on public.profiles for insert with check (auth.uid() = id);
+drop policy if exists "own profile update" on public.profiles;
 create policy "own profile update" on public.profiles for update using (auth.uid() = id);
 
 -- Sifariş yalnız sahibi tərəfindən oxunur; yazma server tərəfindən (service role) aparılır
+drop policy if exists "own orders read" on public.orders;
 create policy "own orders read" on public.orders for select using (auth.uid() = user_id);
 
 -- inquiries: heç bir public siyasət yoxdur — yalnız server (service role) yazır/oxuyur.

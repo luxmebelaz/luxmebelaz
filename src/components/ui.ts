@@ -1,6 +1,6 @@
 // Formalarda təkrar istifadə olunan sinif adları
 export const fieldClass =
-  'w-full bg-white/35 border border-white/50 rounded-xl p-4 text-[15px] text-neutral-900 placeholder:text-neutral-500 outline-none focus:border-black/50 focus:bg-white/50 transition-colors';
+  'w-full bg-white/35 border border-white/50 rounded-xl p-4 text-[14px] text-neutral-900 placeholder:text-neutral-500 outline-none focus:border-black/50 focus:bg-white/50 transition-colors';
 
 export const labelClass = 'block text-xs font-bold tracking-wider uppercase text-neutral-700 mb-2';
 
