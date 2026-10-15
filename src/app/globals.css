@@ -39,6 +39,22 @@
   }
 }
 
+/* Lenis (yumşaq sürüşmə): səhifənin hündürlüyü məzmunla birlikdə böyüməlidir.
+   html/body hündürlüyü 100%-ə bərkidiləndə Lenis məzmunun (şəkillər, məhsullar) sonradan
+   böyüməsini görmür və sürüşmə köhnə hündürlükdə "ilişib qalır". (lenis/dist/lenis.css-dən) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 html {
   background: var(--paper);
   scroll-padding-top: 6rem;

@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ExternalLink, Loader2, Mail, MessageCircle, Phone } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import OrderStatusControl from '@/components/admin/OrderStatusControl';
+import DeleteOrderButton from '@/components/admin/DeleteOrderButton';
 import { adminCard } from '@/components/admin/styles';
 import { requireAdmin } from '@/lib/admin';
 import { getOrderFresh } from '@/lib/admin-data';
@@ -141,6 +142,7 @@ async function OrderDetail({ searchParams }: { searchParams: PageProps<'/admin/s
             </section>
 
             <OrderStatusControl orderNumber={order.orderNumber} status={order.status} />
+            <DeleteOrderButton orderNumber={order.orderNumber} />
           </aside>
         </div>
       </main>

@@ -172,3 +172,13 @@ export async function setOrderStatus(orderNumber: string, status: OrderStatus, n
   if (error) return { ok: false, error: `Dəyişmədi: ${error.message}. supabase/orders.sql işlədilibmi?` };
   return { ok: true };
 }
+
+// Sifarişi tamamilə silir (geri qaytarılmır)
+export async function deleteOrder(orderNumber: string): Promise<ActionResult> {
+  if (!(await getAdminUser())) return NOT_ADMIN;
+  const db = getAdminSupabase();
+  if (!db) return NO_DB;
+  const { error } = await db.from('orders').delete().eq('order_number', orderNumber);
+  if (error) return { ok: false, error: `Silinmədi: ${error.message}` };
+  return { ok: true };
+}

@@ -36,9 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="az"
-      className={`${notoSans.variable} ${oswald.variable} h-full antialiased`}
+      className={`${notoSans.variable} ${oswald.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <SmoothScroll>
           <SiteChrome>{children}</SiteChrome>
         </SmoothScroll>
