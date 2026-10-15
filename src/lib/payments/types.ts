@@ -1,5 +1,5 @@
 // Onlayn ödəniş provayderinin (virtual POS) ümumi interfeysi.
-// Sayt yalnız bu interfeysdən istifadə edir; bankın konkret API-si adapter faylındadır (məs. leobank.ts).
+// Sayt yalnız bu interfeysdən istifadə edir; bankın konkret API-si adapter faylındadır (məs. unibank.ts).
 
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'cancelled';
 

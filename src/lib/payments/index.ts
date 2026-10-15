@@ -1,12 +1,12 @@
 import 'server-only';
 
-import { leobank } from './leobank';
+import { unibank } from './unibank';
 import type { PaymentProvider } from './types';
 
 export type { PaymentStatus } from './types';
 
 // Aktiv provayder. Başqa banka keçmək üçün yalnız burada adapteri dəyişmək kifayətdir.
-const provider: PaymentProvider = leobank;
+const provider: PaymentProvider = unibank;
 
 export function getPaymentProvider(): PaymentProvider | null {
   return provider.isReady() ? provider : null;

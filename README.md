@@ -38,7 +38,7 @@ Admin paneldə seçilən şəkil brauzerdə kiçildilir (maks. 2000 px, JPEG), `
 
 ## Onlayn ödəniş (virtual POS)
 
-`src/lib/payments/` — bankdan asılı olmayan interfeys (`types.ts`) və LEO Bank adapteri (`leobank.ts`).
+`src/lib/payments/` — bankdan asılı olmayan interfeys (`types.ts`) və Unibank adapteri (`unibank.ts`).
 Axın: `/sifaris` → `/api/orders` (sifariş `pending`, bankda ödəniş yaradılır) → bankın səhifəsi →
 `/odenis?sifaris=...` (status bankdan yoxlanılır) və `/api/payments/callback` (bankın serverdən bildirişi).
 Adapter tamamlanana qədər (`IMPLEMENTED = false`) "Onlayn kartla" seçimi görünmür.

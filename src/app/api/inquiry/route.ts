@@ -1,4 +1,6 @@
+import { after } from 'next/server';
 import { saveInquiry } from '@/lib/db';
+import { notifyInquiry } from '@/lib/email';
 import { isPhone } from '@/lib/format';
 
 const clean = (value: unknown, max: number) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
@@ -23,10 +25,12 @@ export async function POST(request: Request) {
   if (!isPhone(phone)) return Response.json({ ok: false, error: 'Telefon nömrəsi düzgün deyil.' }, { status: 422 });
   if (message.length < 5) return Response.json({ ok: false, error: 'Mesajınızı yazın.' }, { status: 422 });
 
+  const inquiry = { name, phone, space: space || undefined, message };
   try {
-    await saveInquiry({ name, phone, space: space || undefined, message });
+    await saveInquiry(inquiry);
   } catch {
     return Response.json({ ok: false, error: 'Mesajı göndərmək mümkün olmadı. Zəhmət olmasa zəng edin.' }, { status: 500 });
   }
+  after(() => notifyInquiry(inquiry));
   return Response.json({ ok: true });
 }

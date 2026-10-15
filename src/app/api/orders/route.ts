@@ -1,4 +1,6 @@
-import { saveOrder, updateOrderPayment } from '@/lib/db';
+import { after } from 'next/server';
+import { saveOrder, updateOrderPayment, type OrderRecord } from '@/lib/db';
+import { confirmOrderToCustomer, notifyNewOrder } from '@/lib/email';
 import { getPaymentProvider } from '@/lib/payments';
 import { isEmail, isPhone } from '@/lib/format';
 import { getProduct } from '@/lib/repository';
@@ -76,23 +78,30 @@ export async function POST(request: Request) {
     userId = undefined;
   }
 
+  const record: OrderRecord = {
+    orderNumber,
+    userId,
+    customer: { name, phone, email: email || undefined, city, address },
+    items,
+    total,
+    payment: PAYMENTS[paymentKey],
+    note: note || undefined,
+    online: provider ? { provider: provider.id } : undefined,
+  };
+
   try {
-    await saveOrder({
-      orderNumber,
-      userId,
-      customer: { name, phone, email: email || undefined, city, address },
-      items,
-      total,
-      payment: PAYMENTS[paymentKey],
-      note: note || undefined,
-      online: provider ? { provider: provider.id } : undefined,
-    });
+    await saveOrder(record);
   } catch {
     return Response.json(
       { ok: false, error: `Sifarişi yadda saxlamaq mümkün olmadı. Zəhmət olmasa zəng edin: ${site.phone}` },
       { status: 500 },
     );
   }
+
+  // Bildiriş məktubları cavab göndəriləndən sonra (Resend); müştəriyə təsdiq yalnız onlayn olmayan ödənişdə
+  after(async () => {
+    await Promise.all([notifyNewOrder(record), provider ? Promise.resolve() : confirmOrderToCustomer(record)]);
+  });
 
   // Onlayn ödəniş: bankda ödəniş yaradılır, müştəri bankın səhifəsinə yönləndirilir.
   // Sifariş "pending" statusunda saxlanılıb; nəticə /api/payments/callback və /odenis səhifəsində təsdiqlənir.
