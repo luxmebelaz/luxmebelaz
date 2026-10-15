@@ -24,7 +24,9 @@ npm run lint
 
 ## Supabase
 
-SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql`.
+SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql` → `supabase/payments.sql`.
+
+E-poçt şablonları (Azərbaycan dilində): `supabase/email-templates/` — Supabase → Authentication → Emails bölməsinə köçürün.
 
 - Məhsullar `products` cədvəlindədir və yalnız admin paneldən dəyişdirilir (yazma serverdə, service role açarı ilə).
 - Kataloq `"use cache"` + `cacheTag('catalog')` ilə keşlənir; admin paneldə hər dəyişiklik `updateTag('catalog')` çağırır, sayt dərhal yenilənir.
@@ -33,6 +35,13 @@ SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql`
 ## imgbb
 
 Admin paneldə seçilən şəkil brauzerdə kiçildilir (maks. 2000 px, JPEG), `/api/admin/upload` marşrutu ilə imgbb-yə göndərilir və `https://i.ibb.co/...` ünvanı məhsulun `images` sahəsinə yazılır. `IMGBB_API_KEY` yalnız serverdədir.
+
+## Onlayn ödəniş (virtual POS)
+
+`src/lib/payments/` — bankdan asılı olmayan interfeys (`types.ts`) və LEO Bank adapteri (`leobank.ts`).
+Axın: `/sifaris` → `/api/orders` (sifariş `pending`, bankda ödəniş yaradılır) → bankın səhifəsi →
+`/odenis?sifaris=...` (status bankdan yoxlanılır) və `/api/payments/callback` (bankın serverdən bildirişi).
+Adapter tamamlanana qədər (`IMPLEMENTED = false`) "Onlayn kartla" seçimi görünmür.
 
 ## Mühit dəyişənləri
 

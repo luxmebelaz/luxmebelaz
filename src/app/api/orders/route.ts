@@ -1,4 +1,5 @@
-import { saveOrder } from '@/lib/db';
+import { saveOrder, updateOrderPayment } from '@/lib/db';
+import { getPaymentProvider } from '@/lib/payments';
 import { isEmail, isPhone } from '@/lib/format';
 import { getProduct } from '@/lib/repository';
 import { getServerSupabase } from '@/lib/supabase/server';
@@ -9,6 +10,7 @@ const clean = (value: unknown, max: number) => (typeof value === 'string' ? valu
 const PAYMENTS: Record<string, string> = {
   cash: 'Çatdırılma zamanı nağd',
   card_on_delivery: 'Çatdırılma zamanı kartla',
+  online: 'Onlayn kartla',
 };
 
 function makeOrderNumber() {
@@ -42,6 +44,10 @@ export async function POST(request: Request) {
   if (city.length < 2) return Response.json({ ok: false, error: 'Şəhəri daxil edin.' }, { status: 422 });
   if (address.length < 5) return Response.json({ ok: false, error: 'Ünvanı daxil edin.' }, { status: 422 });
   if (!PAYMENTS[paymentKey]) return Response.json({ ok: false, error: 'Ödəniş üsulunu seçin.' }, { status: 422 });
+  const provider = paymentKey === 'online' ? getPaymentProvider() : null;
+  if (paymentKey === 'online' && !provider) {
+    return Response.json({ ok: false, error: 'Onlayn ödəniş hazırda mövcud deyil. Başqa üsul seçin.' }, { status: 422 });
+  }
 
   const rawItems = Array.isArray(body.items) ? body.items.slice(0, 50) : [];
   const items: { slug: string; name: string; qty: number; price: number }[] = [];
@@ -79,12 +85,40 @@ export async function POST(request: Request) {
       total,
       payment: PAYMENTS[paymentKey],
       note: note || undefined,
+      online: provider ? { provider: provider.id } : undefined,
     });
   } catch {
     return Response.json(
       { ok: false, error: `Sifarişi yadda saxlamaq mümkün olmadı. Zəhmət olmasa zəng edin: ${site.phone}` },
       { status: 500 },
     );
+  }
+
+  // Onlayn ödəniş: bankda ödəniş yaradılır, müştəri bankın səhifəsinə yönləndirilir.
+  // Sifariş "pending" statusunda saxlanılıb; nəticə /api/payments/callback və /odenis səhifəsində təsdiqlənir.
+  if (provider) {
+    const origin = new URL(request.url).origin;
+    try {
+      const payment = await provider.createPayment({
+        orderNumber,
+        amount: total,
+        currency: 'AZN',
+        description: `LuxMebel sifarişi ${orderNumber}`,
+        returnUrl: `${origin}/odenis?sifaris=${encodeURIComponent(orderNumber)}`,
+        callbackUrl: `${origin}/api/payments/callback`,
+        language: 'az',
+        customer: { name, phone, email: email || undefined },
+      });
+      await updateOrderPayment(orderNumber, { paymentId: payment.paymentId });
+      return Response.json({ ok: true, orderNumber, total, payment: PAYMENTS[paymentKey], items, redirectUrl: payment.redirectUrl });
+    } catch (e) {
+      console.error('[payment:create:error]', orderNumber, e);
+      await updateOrderPayment(orderNumber, { status: 'failed' });
+      return Response.json(
+        { ok: false, error: `Ödəniş səhifəsini açmaq mümkün olmadı. Başqa ödəniş üsulu seçin və ya zəng edin: ${site.phone}` },
+        { status: 502 },
+      );
+    }
   }
 
   return Response.json({ ok: true, orderNumber, total, payment: PAYMENTS[paymentKey], items });

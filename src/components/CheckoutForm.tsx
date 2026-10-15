@@ -14,12 +14,14 @@ import { site } from '@/lib/site';
 
 type Confirmation = { orderNumber: string; total: number };
 
-const payments = [
+const basePayments = [
   { key: 'cash', label: 'Çatdırılma zamanı nağd' },
   { key: 'card_on_delivery', label: 'Çatdırılma zamanı kartla' },
 ];
 
-export default function CheckoutForm() {
+// onlineEnabled: bankın virtual POS-u qoşulubsa (src/lib/payments) "Onlayn kartla" seçimi görünür
+export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?: boolean }) {
+  const payments = onlineEnabled ? [{ key: 'online', label: 'Onlayn kartla (Visa, Mastercard)' }, ...basePayments] : basePayments;
   const hydrated = useHydrated();
   const { items, total, clear } = useCart();
   const user = useUser();
@@ -53,6 +55,11 @@ export default function CheckoutForm() {
       const json = await res.json().catch(() => null);
       if (!res.ok || !json?.ok) {
         setError(json?.error ?? 'Sifarişi göndərmək mümkün olmadı. Bir az sonra yenidən cəhd edin.');
+        return;
+      }
+      // Onlayn ödəniş: bankın ödəniş səhifəsinə keçid. Səbət ödəniş təsdiqlənəndə (/odenis) təmizlənir.
+      if (typeof json.redirectUrl === 'string' && /^https:\/\//.test(json.redirectUrl)) {
+        window.location.assign(json.redirectUrl);
         return;
       }
       saveLocalOrder({
@@ -154,7 +161,7 @@ export default function CheckoutForm() {
           </div>
           <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 text-xs text-neutral-700">
             <PaymentBadges />
-            <span>Onlayn kart ödənişi ödəniş sistemi qoşulduqdan sonra aktiv olacaq.</span>
+            {!onlineEnabled && <span>Onlayn kart ödənişi tezliklə aktiv olacaq.</span>}
           </div>
         </fieldset>
 

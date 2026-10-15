@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import PageSection from '@/components/PageSection';
 import CheckoutForm from '@/components/CheckoutForm';
+import { isOnlinePaymentEnabled } from '@/lib/payments';
 
 export const metadata: Metadata = {
   title: 'Sifarişin rəsmiləşdirilməsi',
@@ -17,7 +18,7 @@ export default function CheckoutPage() {
         crumbs={[{ label: 'Səbət', href: '/sebet' }, { label: 'Sifariş' }]}
       />
       <PageSection>
-        <CheckoutForm />
+        <CheckoutForm onlineEnabled={isOnlinePaymentEnabled()} />
       </PageSection>
     </>
   );
