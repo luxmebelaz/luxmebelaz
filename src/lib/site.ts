@@ -24,7 +24,13 @@ export const site = {
 
 // Hər məhsul səhifəsində göstərilən standart qeydlər
 // (yeni qeyd əlavə etmək üçün siyahıya sətir yazmaq kifayətdir)
-export const productNotes = ['Məhsul şəkildəki ilə tam eynidir'] as const;
+export const productNotes = [
+  'Məhsul şəkildəki ilə tam eynidir',
+  'Rəsmi zəmanət verilir',
+  'Çatdırılma və yerində quraşdırma komandamız tərəfindən',
+  'Ödəniş çatdırılma zamanı — nağd və ya kartla',
+  'Fərdi ölçü və rəng sifarişlə mümkündür',
+] as const;
 
 export const navLinks = [
   { label: 'Ana səhifə', href: '/' },

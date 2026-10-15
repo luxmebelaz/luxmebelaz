@@ -6,7 +6,8 @@ import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { getBrowserSupabase } from '@/lib/supabase/client';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
 
-export type User = { id: string; name: string; email: string; phone: string; avatar?: string };
+export type Gender = 'male' | 'female';
+export type User = { id: string; name: string; email: string; phone: string; avatar?: string; gender?: Gender };
 
 type AuthState = { user: User | null; loading: boolean };
 
@@ -33,6 +34,7 @@ function mapUser(u: SupabaseUser | null | undefined): User | null {
     name: str(meta.full_name) || str(meta.name) || email.split('@')[0],
     phone: str(meta.phone) || u.phone || '',
     avatar: str(meta.avatar_url) || str(meta.picture) || undefined,
+    gender: meta.gender === 'male' || meta.gender === 'female' ? meta.gender : undefined,
   };
 }
 
@@ -143,4 +145,30 @@ export async function updatePassword(password: string): Promise<{ ok: boolean; e
   if (!supabase) return { ok: false, error: NOT_CONFIGURED };
   const { error } = await supabase.auth.updateUser({ password });
   return error ? { ok: false, error: translate(error.message) } : { ok: true };
+}
+
+// Profilin yenilənməsi: auth metadata (sayt hər yerdə buradan oxuyur) + profiles cədvəli (admin/hesabat üçün)
+export async function updateProfile(input: { name: string; phone: string; gender?: Gender | ''; avatar?: string | null }): Promise<{ ok: boolean; error?: string }> {
+  const supabase = getBrowserSupabase();
+  if (!supabase) return { ok: false, error: NOT_CONFIGURED };
+  const data: Record<string, unknown> = {
+    full_name: input.name.trim(),
+    phone: input.phone.trim(),
+    gender: input.gender || null,
+  };
+  if (input.avatar !== undefined) data.avatar_url = input.avatar;
+  const { data: res, error } = await supabase.auth.updateUser({ data });
+  if (error) return { ok: false, error: translate(error.message) };
+  const id = res.user?.id;
+  if (id) {
+    const { error: profileError } = await supabase.from('profiles').upsert({
+      id,
+      full_name: data.full_name,
+      phone: data.phone,
+      gender: data.gender,
+      ...(input.avatar !== undefined ? { avatar_url: input.avatar } : {}),
+    });
+    if (profileError) console.error('[profile:error]', profileError.message);
+  }
+  return { ok: true };
 }

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogOut, Package } from 'lucide-react';
+import { ArrowRight, LogOut, Package, Pencil } from 'lucide-react';
 import { logoutUser, useAuth } from '@/lib/auth';
 import { getBrowserSupabase } from '@/lib/supabase/client';
 import { useOrders, type StoredOrder } from '@/lib/orders';
@@ -12,6 +12,7 @@ import { formatPrice } from '@/lib/format';
 import { optionLabel } from '@/lib/catalog';
 import { isOrderStatus, ORDER_STATUS_LABEL, ORDER_STATUS_STYLE } from '@/lib/order-status';
 import { primaryButton, secondaryButton } from '@/components/ui';
+import ProfileEditor, { GENDER_LABEL } from '@/components/ProfileEditor';
 
 type OrderRow = {
   order_number: string;
@@ -62,6 +63,7 @@ export default function AccountView() {
   const localOrders = useOrders();
   const remoteOrders = useRemoteOrders(user?.id);
   const orders = remoteOrders ?? localOrders;
+  const [editing, setEditing] = useState(false);
 
   if (loading) return <div className="glass-light rounded-3xl h-64 animate-pulse" aria-hidden="true" />;
 
@@ -81,33 +83,44 @@ export default function AccountView() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6 lg:gap-8 items-start">
       <section className="glass-light rounded-3xl p-6 sm:p-8">
-        <div className="flex items-center gap-4 mb-5">
-          {user.avatar ? (
-            <Image src={user.avatar} alt="" width={56} height={56} className="rounded-full" referrerPolicy="no-referrer" unoptimized />
-          ) : (
-            <span className="w-14 h-14 rounded-full bg-[#111] text-white flex items-center justify-center text-xl font-bold">
-              {user.name.slice(0, 1).toLocaleUpperCase('az')}
-            </span>
-          )}
-          <h2 className="text-xl font-bold">Profil</h2>
-        </div>
-        <dl className="flex flex-col gap-4 text-[14px]">
-          <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Ad, soyad</dt><dd className="font-semibold">{user.name}</dd></div>
-          <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">E-poçt</dt><dd className="font-semibold break-all">{user.email}</dd></div>
-          {user.phone && (
-            <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Telefon</dt><dd className="font-semibold">{user.phone}</dd></div>
-          )}
-        </dl>
-        <button
-          type="button"
-          onClick={async () => {
-            await logoutUser();
-            router.push('/');
-          }}
-          className={`${secondaryButton} w-full mt-7`}
-        >
-          <LogOut className="w-4 h-4" /> Çıxış
-        </button>
+        {editing ? (
+          <>
+            <h2 className="text-xl font-bold mb-5">Profili redaktə et</h2>
+            <ProfileEditor user={user} onDone={() => setEditing(false)} />
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-4 mb-5">
+              {user.avatar ? (
+                <Image src={user.avatar} alt="" width={64} height={64} className="w-16 h-16 rounded-full object-cover" referrerPolicy="no-referrer" unoptimized />
+              ) : (
+                <span className="w-16 h-16 rounded-full bg-[#111] text-white flex items-center justify-center text-xl font-bold">
+                  {user.name.slice(0, 1).toLocaleUpperCase('az')}
+                </span>
+              )}
+              <h2 className="text-xl font-bold">Profil</h2>
+            </div>
+            <dl className="flex flex-col gap-4 text-[14px]">
+              <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Ad, soyad</dt><dd className="font-semibold">{user.name}</dd></div>
+              <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">E-poçt</dt><dd className="font-semibold break-all">{user.email}</dd></div>
+              <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Telefon</dt><dd className="font-semibold">{user.phone || <span className="text-neutral-500 font-normal">Əlavə edilməyib</span>}</dd></div>
+              <div><dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Cins</dt><dd className="font-semibold">{user.gender ? GENDER_LABEL[user.gender] : <span className="text-neutral-500 font-normal">Göstərilməyib</span>}</dd></div>
+            </dl>
+            <button type="button" onClick={() => setEditing(true)} className={`${primaryButton} w-full mt-7 !h-12`}>
+              <Pencil className="w-4 h-4" /> Profili redaktə et
+            </button>
+            <button
+              type="button"
+              onClick={async () => {
+                await logoutUser();
+                router.push('/');
+              }}
+              className={`${secondaryButton} w-full mt-3 !h-12`}
+            >
+              <LogOut className="w-4 h-4" /> Çıxış
+            </button>
+          </>
+        )}
       </section>
 
       <section className="glass-light rounded-3xl p-6 sm:p-8">
@@ -140,6 +153,11 @@ export default function AccountView() {
                   <span className="text-neutral-700">{o.payment}</span>
                   <span className="font-extrabold">Cəmi: {formatPrice(o.total)}</span>
                 </div>
+                {/^\d{6}$/.test(o.orderNumber) && (
+                  <Link href={`/hesab/sifaris?n=${o.orderNumber}`} className="inline-flex items-center gap-1.5 mt-3 text-sm font-bold underline underline-offset-4">
+                    Sifarişi izlə <ArrowRight className="w-4 h-4" />
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

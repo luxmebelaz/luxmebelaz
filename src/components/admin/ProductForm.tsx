@@ -8,35 +8,10 @@ import { ArrowLeft, ArrowRight, ImagePlus, Loader2, Star, X } from 'lucide-react
 import { saveProduct, type ProductInput } from '@/app/admin/actions';
 import type { Category, Product } from '@/lib/data/types';
 import { adminCard, adminInput, adminLabel, adminTextarea } from './styles';
+import { uploadImage } from '@/lib/image-compress';
 
-const MAX_SIDE = 2000;
 const MAX_IMAGES = 12;
-
-// Brauzerdə şəkli kiçildib JPEG-ə çevirir (yükləmə sürəti və Vercel 4.5 MB limiti üçün)
-async function compress(file: File): Promise<Blob> {
-  const bitmap = await createImageBitmap(file);
-  const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement('canvas');
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return file;
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  bitmap.close();
-  return new Promise((resolve) => canvas.toBlob((b) => resolve(b ?? file), 'image/jpeg', 0.86));
-}
-
-async function upload(file: File): Promise<string> {
-  const blob = await compress(file);
-  const body = new FormData();
-  body.append('file', new File([blob], 'image.jpg', { type: 'image/jpeg' }));
-  const res = await fetch('/api/admin/upload', { method: 'POST', body });
-  const json = (await res.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string };
-  if (!res.ok || !json.ok || !json.url) throw new Error(json.error ?? 'Şəkil yüklənmədi.');
-  return json.url;
-}
+const upload = (file: File) => uploadImage(file, '/api/admin/upload');
 
 const specsToText = (specs: Product['specs']) => specs.map((s) => `${s.label}: ${s.value}`).join('\n');
 const textToSpecs = (text: string) =>

@@ -105,7 +105,7 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
           Təcili sualınız üçün: <a href={site.phoneHref} className="font-bold underline">{site.phone}</a>
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/hesab" className={primaryButton}>Sifarişlərim</Link>
+          <Link href={`/sifaris-izle?n=${done.orderNumber}`} className={primaryButton}>Sifarişi izlə</Link>
           <Link href="/magaza" className={secondaryButton}>Alış-verişə davam et</Link>
         </div>
       </div>

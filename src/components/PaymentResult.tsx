@@ -85,7 +85,7 @@ export default function PaymentResult() {
         <p className="text-2xl font-extrabold tracking-wide mb-1">{orderNumber}</p>
         <p className="text-neutral-700 mb-8">Ödənilən məbləğ: {formatPrice(total)}. Çatdırılma üçün tezliklə sizinlə əlaqə saxlayacağıq.</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/hesab" className={primaryButton}>Sifarişlərim</Link>
+          <Link href={`/sifaris-izle?n=${orderNumber}`} className={primaryButton}>Sifarişi izlə</Link>
           <Link href="/magaza" className={secondaryButton}>Alış-verişə davam et</Link>
         </div>
       </div>

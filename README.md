@@ -24,7 +24,7 @@ npm run lint
 
 ## Supabase
 
-SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql` → `supabase/payments.sql` → `supabase/orders.sql`.
+SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql` → `supabase/payments.sql` → `supabase/orders.sql` → `supabase/profile.sql`.
 
 E-poçt şablonları (Azərbaycan dilində): `supabase/email-templates/` — Supabase → Authentication → Emails bölməsinə köçürün.
 

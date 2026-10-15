@@ -11,6 +11,7 @@ const columns = [
       { label: 'Bütün məhsullar', href: '/magaza' },
       { label: 'Kateqoriyalar', href: '/kateqoriyalar' },
       { label: 'Səbət', href: '/sebet' },
+      { label: 'Sifarişi izlə', href: '/sifaris-izle' },
       { label: 'Hesabım', href: '/hesab' },
     ],
   },
