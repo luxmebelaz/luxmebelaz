@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ExternalLink, LogOut, Plus } from 'lucide-react';
+import { ClipboardList, ExternalLink, LogOut, Package, Plus } from 'lucide-react';
 import { logoutUser } from '@/lib/auth';
 
 export default function AdminHeader({ email }: { email: string }) {
@@ -21,6 +21,12 @@ export default function AdminHeader({ email }: { email: string }) {
           LuxMebel <span className="text-neutral-500">Admin</span>
         </Link>
         <nav className="flex items-center gap-1.5 sm:gap-2 text-sm font-semibold">
+          <Link href="/admin" className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full hover:bg-black/5">
+            <Package className="w-4 h-4" /> <span className="hidden sm:inline">Məhsullar</span>
+          </Link>
+          <Link href="/admin/sifarisler" className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full hover:bg-black/5">
+            <ClipboardList className="w-4 h-4" /> <span className="hidden sm:inline">Sifarişlər</span>
+          </Link>
           <Link href="/admin/mehsullar/yeni" className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-full bg-[#111] text-white hover:bg-black">
             <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Yeni məhsul</span>
           </Link>

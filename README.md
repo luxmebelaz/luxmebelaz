@@ -13,7 +13,7 @@ npm run lint
 | Qovluq | Məzmun |
 | --- | --- |
 | `src/app/` | Səhifələr (`/magaza`, `/kateqoriyalar`, `/sebet`, `/sifaris`, `/hesab`, `/elaqe` …) və API (`/api/inquiry`, `/api/orders`) |
-| `src/app/admin/` | İdarəetmə paneli: məhsul əlavə et / redaktə et / sil, ana səhifə bölmələri |
+| `src/app/admin/` | İdarəetmə paneli: məhsullar (rəng/ölçü seçimləri), sifarişlər (status, müştəri, xəritədə konum) |
 | `src/components/` | UI komponentləri (ana səhifə bölmələri, mağaza, səbət, formalar, `admin/`) |
 | `src/lib/site.ts` | Telefon, e-poçt, VÖEN, xəritə, sosial şəbəkə ünvanları |
 | `src/lib/data/` | Sabit məlumatlar: kateqoriyalar, suallar |
@@ -24,7 +24,7 @@ npm run lint
 
 ## Supabase
 
-SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql` → `supabase/payments.sql`.
+SQL Editor-da ardıcıl işlədin: `supabase/schema.sql` → `supabase/auth.sql` → `supabase/catalog.sql` → `supabase/payments.sql` → `supabase/orders.sql`.
 
 E-poçt şablonları (Azərbaycan dilində): `supabase/email-templates/` — Supabase → Authentication → Emails bölməsinə köçürün.
 

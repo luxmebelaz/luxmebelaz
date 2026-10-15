@@ -14,14 +14,17 @@ export type Inquiry = {
   message: string;
 };
 
+export type OrderItem = { slug: string; code?: string; name: string; qty: number; price: number; size?: string; color?: string };
+
 export type OrderRecord = {
   orderNumber: string;
   userId?: string;
   customer: { name: string; phone: string; email?: string; city: string; address: string };
-  items: { slug: string; name: string; qty: number; price: number }[];
+  items: OrderItem[];
   total: number;
   payment: string;
   note?: string;
+  location?: { lat: number; lng: number };
   // Yalnız onlayn ödənişdə (supabase/payments.sql sütunları)
   online?: { provider: string };
 };
@@ -62,9 +65,12 @@ export async function saveOrder(order: OrderRecord): Promise<void> {
     payment: order.payment,
     total: order.total,
     items: order.items,
+    ...(order.location ? { location_lat: order.location.lat, location_lng: order.location.lng } : {}),
     ...(order.online ? { payment_status: 'pending', payment_provider: order.online.provider } : {}),
   });
   if (error) {
+    // 23505: sifariş nömrəsi təkrarlanır — çağıran tərəf yeni nömrə ilə təkrar cəhd edir
+    if (error.code === '23505' && error.message.includes('order_number')) throw new Error('order_number_taken');
     console.error('[order:error]', error.message);
     throw new Error('order_save_failed');
   }
@@ -94,14 +100,15 @@ export async function getOrderPayment(by: { orderNumber: string } | { paymentId:
   };
 }
 
-// Ödənilmiş sifariş bir daha dəyişdirilmir (təkrar callback-lər üçün idempotent)
+// Ödənilmiş sifariş bir daha dəyişdirilmir (təkrar callback-lər üçün idempotent).
+// true — sətir həqiqətən yeniləndi (məs. ilk dəfə "paid" oldu).
 export async function updateOrderPayment(
   orderNumber: string,
   patch: { paymentId?: string; status?: PaymentStatus },
-): Promise<void> {
+): Promise<boolean> {
   const db = getAdminSupabase();
-  if (!db) return;
-  const { error } = await db
+  if (!db) return false;
+  const { data, error } = await db
     .from('orders')
     .update({
       ...(patch.paymentId ? { payment_id: patch.paymentId } : {}),
@@ -109,6 +116,8 @@ export async function updateOrderPayment(
       ...(patch.status === 'paid' ? { paid_at: new Date().toISOString() } : {}),
     })
     .eq('order_number', orderNumber)
-    .neq('payment_status', 'paid');
+    .neq('payment_status', 'paid')
+    .select('order_number');
   if (error) console.error('[payment:update:error]', orderNumber, error.message);
+  return (data?.length ?? 0) > 0;
 }

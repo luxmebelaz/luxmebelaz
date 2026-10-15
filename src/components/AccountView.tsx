@@ -9,6 +9,8 @@ import { logoutUser, useAuth } from '@/lib/auth';
 import { getBrowserSupabase } from '@/lib/supabase/client';
 import { useOrders, type StoredOrder } from '@/lib/orders';
 import { formatPrice } from '@/lib/format';
+import { optionLabel } from '@/lib/catalog';
+import { isOrderStatus, ORDER_STATUS_LABEL, ORDER_STATUS_STYLE } from '@/lib/order-status';
 import { primaryButton, secondaryButton } from '@/components/ui';
 
 type OrderRow = {
@@ -16,7 +18,8 @@ type OrderRow = {
   created_at: string;
   total: number | string;
   payment: string;
-  items: { name: string; qty: number; price: number }[];
+  status?: string;
+  items: { name: string; qty: number; price: number; size?: string; color?: string }[];
 };
 
 // Daxil olmuş istifadəçinin sifarişlərini Supabase-dən oxuyur (RLS yalnız öz sifarişlərini verir)
@@ -29,7 +32,7 @@ function useRemoteOrders(userId: string | undefined) {
     let cancelled = false;
     supabase
       .from('orders')
-      .select('order_number, created_at, total, payment, items')
+      .select('*')
       .order('created_at', { ascending: false })
       .limit(50)
       .then(({ data, error }) => {
@@ -40,6 +43,7 @@ function useRemoteOrders(userId: string | undefined) {
             createdAt: r.created_at,
             total: Number(r.total),
             payment: r.payment,
+            status: r.status,
             items: r.items ?? [],
           })),
         );
@@ -119,12 +123,17 @@ export default function AccountView() {
             {orders.map((o) => (
               <li key={o.orderNumber} className="rounded-2xl bg-white/35 border border-white/50 p-4 sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <p className="font-extrabold tracking-wide">{o.orderNumber}</p>
+                  <p className="font-extrabold tracking-wide flex items-center gap-2">
+                    №{o.orderNumber}
+                    {isOrderStatus(o.status) && (
+                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${ORDER_STATUS_STYLE[o.status]}`}>{ORDER_STATUS_LABEL[o.status]}</span>
+                    )}
+                  </p>
                   <p className="text-sm text-neutral-700">{new Date(o.createdAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                 </div>
                 <ul className="text-sm text-neutral-800 flex flex-col gap-1 mb-3">
-                  {o.items.map((i) => (
-                    <li key={i.name} className="flex justify-between gap-3"><span>{i.name} × {i.qty}</span><span className="font-semibold">{formatPrice(i.price * i.qty)}</span></li>
+                  {o.items.map((i, idx) => (
+                    <li key={idx} className="flex justify-between gap-3"><span>{i.name}{(i.color || i.size) && ` (${optionLabel(i)})`} × {i.qty}</span><span className="font-semibold">{formatPrice(i.price * i.qty)}</span></li>
                   ))}
                 </ul>
                 <div className="flex flex-wrap justify-between gap-2 pt-3 border-t border-black/10 text-sm">

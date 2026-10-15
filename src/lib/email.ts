@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { formatPrice } from '@/lib/format';
+import { optionLabel } from '@/lib/catalog';
 import { site } from '@/lib/site';
 import type { Inquiry, OrderRecord } from '@/lib/db';
 
@@ -55,7 +56,7 @@ function itemsTable(order: OrderRecord): string {
   const lines = order.items
     .map(
       (i) =>
-        `<tr><td style="padding:6px 0;font-size:14px;border-bottom:1px solid #f0f0f0;">${esc(i.name)} × ${i.qty}</td><td align="right" style="padding:6px 0;font-size:14px;border-bottom:1px solid #f0f0f0;">${esc(formatPrice(i.price * i.qty))}</td></tr>`,
+        `<tr><td style="padding:6px 0;font-size:14px;border-bottom:1px solid #f0f0f0;">${esc(i.name)}${i.color || i.size ? ` <span style="color:#666;">(${esc(optionLabel(i))})</span>` : ''}${i.code ? ` <span style="color:#999;">#${esc(i.code)}</span>` : ''} × ${i.qty}</td><td align="right" style="padding:6px 0;font-size:14px;border-bottom:1px solid #f0f0f0;">${esc(formatPrice(i.price * i.qty))}</td></tr>`,
     )
     .join('');
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0;">${lines}
@@ -66,12 +67,12 @@ function itemsTable(order: OrderRecord): string {
 export function notifyNewOrder(order: OrderRecord): Promise<void> {
   const c = order.customer;
   const body = `<table role="presentation" cellpadding="0" cellspacing="0">
-${row('Sifariş', order.orderNumber)}${row('Ad', c.name)}${row('Telefon', c.phone)}${c.email ? row('E-poçt', c.email) : ''}
-${row('Ünvan', `${c.city}, ${c.address}`)}${row('Ödəniş', order.payment + (order.online ? ' (ödəniş gözlənilir)' : ''))}${order.note ? row('Qeyd', order.note) : ''}
+${row('Sifariş', `№${order.orderNumber}`)}${row('Ad', c.name)}${row('Telefon', c.phone)}${c.email ? row('E-poçt', c.email) : ''}
+${row('Ünvan', `${c.city}, ${c.address}`)}${order.location ? `<tr><td style="padding:4px 12px 4px 0;color:#666;font-size:14px;">Konum</td><td style="padding:4px 0;font-size:14px;"><a href="https://www.google.com/maps?q=${order.location.lat},${order.location.lng}">Xəritədə aç</a></td></tr>` : ''}${row('Ödəniş', order.payment + (order.online ? ' (ödəniş gözlənilir)' : ''))}${order.note ? row('Qeyd', order.note) : ''}
 </table>${itemsTable(order)}`;
   return send({
     to: NOTIFY_TO(),
-    subject: `Yeni sifariş ${order.orderNumber} — ${formatPrice(order.total)}`,
+    subject: `Yeni sifariş №${order.orderNumber} — ${formatPrice(order.total)}`,
     html: layout('Yeni sifariş', body),
     replyTo: c.email,
   });
@@ -85,10 +86,10 @@ export function confirmOrderToCustomer(order: OrderRecord): Promise<void> {
 <p style="margin:0 0 8px;font-size:15px;line-height:1.6;">Sifarişiniz qəbul olundu. Komandamız sifarişi təsdiqləmək və çatdırılma vaxtını dəqiqləşdirmək üçün tezliklə sizinlə əlaqə saxlayacaq.</p>
 <p style="margin:16px 0 0;font-size:14px;">Sifariş nömrəsi: <b>${esc(order.orderNumber)}</b><br>Ödəniş: ${esc(order.payment)}</p>
 ${itemsTable(order)}
-<p style="margin:0;font-size:13px;color:#666;">Çatdırılma haqqı sifariş təsdiqlənərkən bildirilir. Sualınız varsa, bu məktuba cavab yazın və ya zəng edin: ${esc(site.phone)}.</p>`;
+<p style="margin:0;font-size:13px;color:#666;">Sifarişin vəziyyətini saytda “Hesabım” bölməsində izləyə bilərsiniz. Çatdırılma haqqı sifariş təsdiqlənərkən bildirilir. Sualınız varsa, bu məktuba cavab yazın və ya zəng edin: ${esc(site.phone)}.</p>`;
   return send({
     to: [email],
-    subject: `Sifarişiniz qəbul olundu — ${order.orderNumber}`,
+    subject: `Sifarişiniz qəbul olundu — №${order.orderNumber}`,
     html: layout('Sifarişiniz qəbul olundu', body),
     replyTo: site.email,
   });
@@ -103,5 +104,14 @@ ${row('Ad', inquiry.name)}${row('Telefon', inquiry.phone)}${inquiry.space ? row(
     to: NOTIFY_TO(),
     subject: `Yeni müraciət — ${inquiry.name}`,
     html: layout('Saytdan yeni müraciət', body),
+  });
+}
+
+// Mağazaya: onlayn ödəniş təsdiqləndi
+export function notifyOrderPaid(orderNumber: string, total: number): Promise<void> {
+  return send({
+    to: NOTIFY_TO(),
+    subject: `Ödəniş alındı — №${orderNumber} (${formatPrice(total)})`,
+    html: layout('Onlayn ödəniş alındı', `<p style="margin:0;font-size:15px;">Sifariş №${esc(orderNumber)} üçün ${esc(formatPrice(total))} onlayn ödənildi.</p>`),
   });
 }

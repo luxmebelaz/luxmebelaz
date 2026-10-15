@@ -3,12 +3,18 @@
 import { useSyncExternalStore } from 'react';
 
 export type CartItem = {
+  key: string; // slug + seçimlər: eyni məhsulun fərqli rəng/ölçüsü ayrı sətirdir
   slug: string;
   name: string;
   price: number;
   image: string;
   qty: number;
+  size?: string;
+  color?: string;
 };
+
+export const cartKey = (i: { slug: string; size?: string; color?: string }) =>
+  [i.slug, i.size ?? '', i.color ?? ''].join('|');
 
 const KEY = 'luxmebel:cart';
 const EMPTY: CartItem[] = [];
@@ -31,7 +37,13 @@ function sanitize(raw: unknown): CartItem[] {
         Number.isInteger(i.qty) &&
         i.qty > 0,
     )
-    .map((i) => ({ ...i, qty: Math.min(i.qty, MAX_QTY) }));
+    .map((i) => ({
+      ...i,
+      size: typeof i.size === 'string' && i.size ? i.size : undefined,
+      color: typeof i.color === 'string' && i.color ? i.color : undefined,
+      key: cartKey(i),
+      qty: Math.min(i.qty, MAX_QTY),
+    }));
 }
 
 function read(): CartItem[] {
@@ -83,22 +95,23 @@ function getSnapshot() {
 const getServerSnapshot = () => EMPTY;
 
 export const cartActions = {
-  add(item: Omit<CartItem, 'qty'>, qty = 1) {
+  add(item: Omit<CartItem, 'qty' | 'key'>, qty = 1) {
     const items = getSnapshot();
-    const existing = items.find((i) => i.slug === item.slug);
+    const key = cartKey(item);
+    const existing = items.find((i) => i.key === key);
     if (existing) {
-      write(items.map((i) => (i.slug === item.slug ? { ...i, qty: Math.min(i.qty + qty, MAX_QTY) } : i)));
+      write(items.map((i) => (i.key === key ? { ...i, qty: Math.min(i.qty + qty, MAX_QTY) } : i)));
     } else {
-      write([...items, { ...item, qty: Math.min(qty, MAX_QTY) }]);
+      write([...items, { ...item, key, qty: Math.min(qty, MAX_QTY) }]);
     }
   },
-  setQty(slug: string, qty: number) {
+  setQty(key: string, qty: number) {
     const items = getSnapshot();
-    if (qty <= 0) return write(items.filter((i) => i.slug !== slug));
-    write(items.map((i) => (i.slug === slug ? { ...i, qty: Math.min(qty, MAX_QTY) } : i)));
+    if (qty <= 0) return write(items.filter((i) => i.key !== key));
+    write(items.map((i) => (i.key === key ? { ...i, qty: Math.min(qty, MAX_QTY) } : i)));
   },
-  remove(slug: string) {
-    write(getSnapshot().filter((i) => i.slug !== slug));
+  remove(key: string) {
+    write(getSnapshot().filter((i) => i.key !== key));
   },
   clear() {
     write(EMPTY);

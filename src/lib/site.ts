@@ -22,6 +22,10 @@ export const site = {
   },
 } as const;
 
+// Hər məhsul səhifəsində göstərilən standart qeydlər
+// (yeni qeyd əlavə etmək üçün siyahıya sətir yazmaq kifayətdir)
+export const productNotes = ['Məhsul şəkildəki ilə tam eynidir'] as const;
+
 export const navLinks = [
   { label: 'Ana səhifə', href: '/' },
   { label: 'Mağaza', href: '/magaza' },

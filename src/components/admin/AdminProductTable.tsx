@@ -86,7 +86,7 @@ export default function AdminProductTable({ products, categories }: { products: 
                 <div className="min-w-0">
                   <Link href={`/admin/mehsullar/redakte?slug=${encodeURIComponent(p.slug)}`} className="font-semibold hover:underline block truncate">{p.name}</Link>
                   <p className="text-xs text-neutral-500">
-                    {categoryName(p.category)} · {formatPrice(p.price)} · Sıra: {p.sortOrder}
+                    {p.code && <>#{p.code} · </>}{categoryName(p.category)} · {formatPrice(p.price)} · Sıra: {p.sortOrder}
                   </p>
                 </div>
               </div>

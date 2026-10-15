@@ -2,7 +2,8 @@
 
 import { updateTag } from 'next/cache';
 import { getAdminUser } from '@/lib/admin';
-import { slugify } from '@/lib/catalog';
+import { sixDigits, slugify } from '@/lib/catalog';
+import { isOrderStatus, type OrderStatus } from '@/lib/order-status';
 import { categories } from '@/lib/data/categories';
 import { CATALOG_TAG } from '@/lib/repository';
 import { getAdminSupabase } from '@/lib/supabase/admin';
@@ -17,6 +18,8 @@ export type ProductInput = {
   imageAlt: string;
   features: string[];
   specs: { label: string; value: string }[];
+  sizes: string[];
+  colors: { name: string; hex?: string }[];
   inStock: boolean;
   featured: boolean;
   isNew: boolean;
@@ -49,6 +52,12 @@ function validate(input: ProductInput): { error: string } | { row: Record<string
     .map((s) => ({ label: str(s?.label, 60), value: str(s?.value, 160) }))
     .filter((s) => s.label && s.value)
     .slice(0, 20);
+  const sizes = [...new Set((Array.isArray(input.sizes) ? input.sizes : []).map((v) => str(v, 60)).filter(Boolean))].slice(0, 20);
+  const seen = new Set<string>();
+  const colors = (Array.isArray(input.colors) ? input.colors : [])
+    .map((c) => ({ name: str(c?.name, 40), hex: /^#[0-9a-fA-F]{6}$/.test(String(c?.hex ?? '')) ? String(c.hex) : undefined }))
+    .filter((c) => c.name && !seen.has(c.name) && seen.add(c.name))
+    .slice(0, 20);
   const sortOrder = Number.isInteger(Number(input.sortOrder)) ? Math.max(-9999, Math.min(9999, Number(input.sortOrder))) : 0;
 
   return {
@@ -63,6 +72,8 @@ function validate(input: ProductInput): { error: string } | { row: Record<string
       image_alt: str(input.imageAlt, 160) || name,
       features,
       specs,
+      sizes,
+      colors,
       in_stock: Boolean(input.inStock),
       featured: Boolean(input.featured),
       is_new: Boolean(input.isNew),
@@ -96,7 +107,12 @@ export async function saveProduct(input: ProductInput, originalSlug?: string): P
   let slug = base;
   for (let i = 2; taken.has(slug); i++) slug = `${base}-${i}`;
 
-  const { error } = await db.from('products').insert({ ...result.row, slug });
+  // 6 rəqəmli unikal məhsul kodu (nadir təkrar halında yenisi)
+  let error: { code?: string; message: string } | null = null;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    ({ error } = await db.from('products').insert({ ...result.row, slug, code: sixDigits() }));
+    if (!error || !(error.code === '23505' && error.message.includes('code'))) break;
+  }
   if (error) return { ok: false, error: `Yadda saxlanmadı: ${error.message}` };
   updateTag(CATALOG_TAG);
   return { ok: true, slug };
@@ -126,5 +142,33 @@ export async function setProductFlag(slug: string, flag: keyof typeof FLAGS, val
     .eq('slug', slug);
   if (error) return { ok: false, error: `Dəyişmədi: ${error.message}` };
   updateTag(CATALOG_TAG);
+  return { ok: true };
+}
+
+// Sifarişin statusunu dəyişir və tarixçəyə yazır (Təsdiqləndi → Hazırlanır → Çatdırılır → Çatdırıldı)
+export async function setOrderStatus(orderNumber: string, status: OrderStatus, note?: string): Promise<ActionResult> {
+  const admin = await getAdminUser();
+  if (!admin) return NOT_ADMIN;
+  if (!isOrderStatus(status)) return { ok: false, error: 'Yanlış status.' };
+  const db = getAdminSupabase();
+  if (!db) return NO_DB;
+
+  const { data: current, error: readError } = await db
+    .from('orders')
+    .select('status,status_history')
+    .eq('order_number', orderNumber)
+    .maybeSingle();
+  if (readError || !current) return { ok: false, error: readError ? `Oxunmadı: ${readError.message}` : 'Sifariş tapılmadı.' };
+  if (current.status === status) return { ok: true };
+
+  const at = new Date().toISOString();
+  const history = Array.isArray(current.status_history) ? current.status_history : [];
+  history.push({ status, at, by: admin.email, ...(note ? { note: str(note, 300) } : {}) });
+
+  const { error } = await db
+    .from('orders')
+    .update({ status, status_history: history, status_updated_at: at })
+    .eq('order_number', orderNumber);
+  if (error) return { ok: false, error: `Dəyişmədi: ${error.message}. supabase/orders.sql işlədilibmi?` };
   return { ok: true };
 }

@@ -1,3 +1,5 @@
+import { after } from 'next/server';
+import { notifyOrderPaid } from '@/lib/email';
 import { getOrderPayment, updateOrderPayment } from '@/lib/db';
 import { getPaymentProvider } from '@/lib/payments';
 
@@ -5,7 +7,7 @@ import { getPaymentProvider } from '@/lib/payments';
 // Status bankın serverindən yoxlanılır; URL-dəki parametrlərə etibar edilmir.
 export async function GET(request: Request) {
   const orderNumber = (new URL(request.url).searchParams.get('sifaris') ?? '').trim().slice(0, 40);
-  if (!/^LM-[A-Z0-9]{5,12}$/.test(orderNumber)) return Response.json({ ok: false }, { status: 400 });
+  if (!/^(\d{6}|LM-[A-Z0-9]{5,12})$/.test(orderNumber)) return Response.json({ ok: false }, { status: 400 });
 
   const order = await getOrderPayment({ orderNumber });
   if (!order) return Response.json({ ok: false }, { status: 404 });
@@ -15,7 +17,9 @@ export async function GET(request: Request) {
   if (status === 'pending' && order.paymentId && provider) {
     try {
       status = await provider.getStatus(order.paymentId);
-      if (status !== 'pending') await updateOrderPayment(orderNumber, { status });
+      if (status !== 'pending' && (await updateOrderPayment(orderNumber, { status })) && status === 'paid') {
+      after(() => notifyOrderPaid(orderNumber, order.total));
+    }
     } catch (e) {
       console.error('[payment:status:error]', orderNumber, e);
     }

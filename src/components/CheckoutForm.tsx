@@ -9,19 +9,26 @@ import { useUser } from '@/lib/auth';
 import { saveLocalOrder } from '@/lib/orders';
 import { formatPrice } from '@/lib/format';
 import PaymentBadges from '@/components/PaymentBadges';
+import LocationPicker, { type LatLng } from '@/components/LocationPicker';
+import { optionLabel } from '@/lib/catalog';
 import { fieldClass, labelClass, primaryButton, secondaryButton } from '@/components/ui';
 import { site } from '@/lib/site';
 
 type Confirmation = { orderNumber: string; total: number };
 
-const basePayments = [
-  { key: 'cash', label: 'Çatdırılma zamanı nağd' },
-  { key: 'card_on_delivery', label: 'Çatdırılma zamanı kartla' },
-];
-
-// onlineEnabled: bankın virtual POS-u qoşulubsa (src/lib/payments) "Onlayn kartla" seçimi görünür
+// onlineEnabled: bankın virtual POS-u qoşulubsa (src/lib/payments) "Saytda kartla" seçilə bilər,
+// qoşulmayıbsa seçim görünür, lakin deaktivdir ("tezliklə").
 export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?: boolean }) {
-  const payments = onlineEnabled ? [{ key: 'online', label: 'Onlayn kartla (Visa, Mastercard)' }, ...basePayments] : basePayments;
+  const payments = [
+    { key: 'on_delivery', label: 'Çatdırılma zamanı (nağd və ya kartla)', hint: 'Ödənişi kuryerə nağd və ya kartla edirsiniz', disabled: false },
+    {
+      key: 'online',
+      label: 'Saytda kartla (onlayn)',
+      hint: onlineEnabled ? 'Təsdiqdən sonra bankın təhlükəsiz ödəniş səhifəsi açılır' : 'Tezliklə aktiv olacaq',
+      disabled: !onlineEnabled,
+    },
+  ];
+  const [location, setLocation] = useState<LatLng | null>(null);
   const hydrated = useHydrated();
   const { items, total, clear } = useCart();
   const user = useUser();
@@ -49,7 +56,8 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
           note: data.get('note'),
           payment: data.get('payment'),
           website: data.get('website'),
-          items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+          location,
+          items: items.map((i) => ({ slug: i.slug, qty: i.qty, size: i.size, color: i.color })),
         }),
       });
       const json = await res.json().catch(() => null);
@@ -67,10 +75,12 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
         createdAt: new Date().toISOString(),
         total: json.total,
         payment: json.payment,
-        items: (json.items as { name: string; qty: number; price: number }[]).map((i) => ({
+        items: (json.items as { name: string; qty: number; price: number; size?: string; color?: string }[]).map((i) => ({
           name: i.name,
           qty: i.qty,
           price: i.price,
+          size: i.size,
+          color: i.color,
         })),
       });
       clear();
@@ -89,7 +99,7 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
         <CheckCircle2 className="w-14 h-14 mx-auto mb-5 text-emerald-700" strokeWidth={1.5} />
         <h2 className="font-display text-4xl uppercase mb-3">Sifarişiniz qəbul olundu</h2>
         <p className="text-neutral-700 mb-2">Sifariş nömrəniz:</p>
-        <p className="text-2xl font-extrabold tracking-wide mb-5">{done.orderNumber}</p>
+        <p className="text-2xl font-extrabold tracking-wide mb-5">№{done.orderNumber}</p>
         <p className="text-neutral-700 mb-8">
           Komandamız sifarişi təsdiqləmək və çatdırılma detallarını dəqiqləşdirmək üçün tezliklə sizinlə əlaqə saxlayacaq.
           Təcili sualınız üçün: <a href={site.phoneHref} className="font-bold underline">{site.phone}</a>
@@ -145,6 +155,10 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
           </div>
         </div>
         <div>
+          <p className={labelClass}>Xəritədə konum</p>
+          <LocationPicker value={location} onChange={setLocation} />
+        </div>
+        <div>
           <label htmlFor="co-note" className={labelClass}>Qeyd</label>
           <textarea id="co-note" name="note" rows={3} className={`${fieldClass} resize-none`} placeholder="Çatdırılma vaxtı, mərtəbə, əlavə istəklər..." />
         </div>
@@ -153,15 +167,22 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
           <legend className={labelClass}>Ödəniş üsulu*</legend>
           <div className="flex flex-col gap-3">
             {payments.map((p, i) => (
-              <label key={p.key} className="flex items-center gap-3 rounded-xl bg-white/35 border border-white/50 p-4 cursor-pointer has-[:checked]:border-black has-[:checked]:bg-white/60">
-                <input type="radio" name="payment" value={p.key} defaultChecked={i === 0} className="w-4 h-4 accent-black" />
-                <span className="font-semibold text-[14px]">{p.label}</span>
+              <label
+                key={p.key}
+                className={`flex items-start gap-3 rounded-xl bg-white/35 border border-white/50 p-4 has-[:checked]:border-black has-[:checked]:bg-white/60 ${
+                  p.disabled ? 'opacity-55 cursor-not-allowed' : 'cursor-pointer'
+                }`}
+              >
+                <input type="radio" name="payment" value={p.key} defaultChecked={i === 0} disabled={p.disabled} className="mt-0.5 w-4 h-4 accent-black" />
+                <span>
+                  <span className="block font-semibold text-[14px]">{p.label}</span>
+                  <span className="block text-xs text-neutral-700 mt-0.5">{p.hint}</span>
+                </span>
               </label>
             ))}
           </div>
           <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 text-xs text-neutral-700">
             <PaymentBadges />
-            {!onlineEnabled && <span>Onlayn kart ödənişi tezliklə aktiv olacaq.</span>}
           </div>
         </fieldset>
 
@@ -182,12 +203,13 @@ export default function CheckoutForm({ onlineEnabled = false }: { onlineEnabled?
         <h2 className="text-xl font-bold mb-4">Sifarişiniz</h2>
         <ul className="flex flex-col gap-3 mb-5">
           {items.map((i) => (
-            <li key={i.slug} className="flex gap-3 items-center">
+            <li key={i.key} className="flex gap-3 items-center">
               <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-[#b5aba0]">
                 <Image src={i.image} alt={i.name} fill sizes="56px" className="object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold leading-tight">{i.name}</p>
+                {(i.color || i.size) && <p className="text-xs text-neutral-700">{optionLabel(i)}</p>}
                 <p className="text-xs text-neutral-700">{i.qty} × {formatPrice(i.price)}</p>
               </div>
               <p className="text-sm font-bold">{formatPrice(i.price * i.qty)}</p>

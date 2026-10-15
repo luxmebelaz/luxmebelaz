@@ -47,6 +47,16 @@ const textToSpecs = (text: string) =>
       return i > 0 ? { label: line.slice(0, i).trim(), value: line.slice(i + 1).trim() } : null;
     })
     .filter((s): s is { label: string; value: string } => !!s && !!s.label && !!s.value);
+const colorsToText = (colors: Product['colors']) => colors.map((c) => (c.hex ? `${c.name} | ${c.hex}` : c.name)).join('\n');
+// "Bej | #d8c8a8" və ya sadəcə "Bej"
+const textToColors = (text: string) =>
+  text
+    .split('\n')
+    .map((line) => {
+      const [name, hex] = line.split('|').map((p) => p.trim());
+      return name ? { name, hex: /^#[0-9a-fA-F]{6}$/.test(hex ?? '') ? hex : undefined } : null;
+    })
+    .filter((c): c is { name: string; hex: string | undefined } => !!c);
 const lines = (text: string) => text.split('\n').map((l) => l.trim()).filter(Boolean);
 
 export default function ProductForm({ product, categories }: { product?: Product; categories: Category[] }) {
@@ -100,6 +110,8 @@ export default function ProductForm({ product, categories }: { product?: Product
       imageAlt: String(f.get('imageAlt') ?? ''),
       features: lines(String(f.get('features') ?? '')),
       specs: textToSpecs(String(f.get('specs') ?? '')),
+      sizes: lines(String(f.get('sizes') ?? '')),
+      colors: textToColors(String(f.get('colors') ?? '')),
       inStock: f.get('inStock') === 'on',
       featured: f.get('featured') === 'on',
       isNew: f.get('isNew') === 'on',
@@ -203,6 +215,23 @@ export default function ProductForm({ product, categories }: { product?: Product
           </div>
         </section>
 
+        <section className={`${adminCard} p-5 flex flex-col gap-4`}>
+          <div>
+            <h2 className="font-bold">Seçimlər (istəyə bağlı)</h2>
+            <p className="text-xs text-neutral-500 mt-1">Doldurulsa, müştəri məhsul səhifəsində seçim etmədən səbətə əlavə edə bilməz. Boş qalsa, seçim göstərilmir.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="colors" className={adminLabel}>Rənglər (hər sətirdə biri, “Ad | #rəng kodu” istəyə bağlı)</label>
+              <textarea id="colors" name="colors" rows={5} defaultValue={product ? colorsToText(product.colors) : ''} className={adminTextarea} placeholder={'Bej | #d8c8a8\nBoz | #8a8a8a\nZümrüd yaşıl'} />
+            </div>
+            <div>
+              <label htmlFor="sizes" className={adminLabel}>Ölçülər (hər sətirdə biri)</label>
+              <textarea id="sizes" name="sizes" rows={5} defaultValue={product?.sizes.join('\n')} className={adminTextarea} placeholder={'200 × 90 sm\n240 × 100 sm\n280 × 160 sm (künc)'} />
+            </div>
+          </div>
+        </section>
+
         <section className={`${adminCard} p-5 grid grid-cols-1 md:grid-cols-2 gap-4`}>
           <div>
             <label htmlFor="features" className={adminLabel}>Üstünlüklər (hər sətirdə biri)</label>
@@ -218,6 +247,7 @@ export default function ProductForm({ product, categories }: { product?: Product
       <aside className="flex flex-col gap-4 lg:sticky lg:top-24">
         <section className={`${adminCard} p-5 flex flex-col gap-3`}>
           <h2 className="font-bold">Görünmə</h2>
+          {product?.code && <p className="text-sm">Məhsul kodu: <b>{product.code}</b></p>}
           <label className="flex items-start gap-3 text-sm cursor-pointer">
             <input type="checkbox" name="featured" defaultChecked={product?.featured ?? false} className="mt-0.5 w-4 h-4 accent-black" />
             <span><b>Ana səhifədə göstər</b><br /><span className="text-neutral-500">“Məhsullarımız” bölməsi</span></span>

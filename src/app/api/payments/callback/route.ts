@@ -1,3 +1,5 @@
+import { after } from 'next/server';
+import { notifyOrderPaid } from '@/lib/email';
 import { getOrderPayment, updateOrderPayment } from '@/lib/db';
 import { getPaymentProvider } from '@/lib/payments';
 
@@ -16,7 +18,9 @@ async function handle(request: Request) {
 
   try {
     const status = await provider.getStatus(paymentId);
-    if (status !== 'pending') await updateOrderPayment(order.orderNumber, { status });
+    if (status !== 'pending' && (await updateOrderPayment(order.orderNumber, { status })) && status === 'paid') {
+      after(() => notifyOrderPaid(order.orderNumber, order.total));
+    }
     return new Response('OK');
   } catch (e) {
     console.error('[payment:callback:error]', order.orderNumber, e);

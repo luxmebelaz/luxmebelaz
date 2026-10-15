@@ -9,7 +9,8 @@ export type StoredOrder = {
   createdAt: string;
   total: number;
   payment: string;
-  items: { name: string; qty: number; price: number }[];
+  status?: string;
+  items: { name: string; qty: number; price: number; size?: string; color?: string }[];
 };
 
 const KEY = 'luxmebel:orders';

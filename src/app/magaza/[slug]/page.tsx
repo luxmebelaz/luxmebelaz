@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import PageSkeleton from '@/components/PageSkeleton';
-import { Check, Phone, Truck, ShieldCheck } from 'lucide-react';
+import { BadgeCheck, Check, Phone, Truck, ShieldCheck } from 'lucide-react';
 import PageSection from '@/components/PageSection';
 import AddToCartButton from '@/components/AddToCartButton';
 import ProductCard from '@/components/ProductCard';
 import ProductGallery from '@/components/ProductGallery';
 import { formatPrice } from '@/lib/format';
 import { getCategory, getProduct, getProducts, getRelatedProducts } from '@/lib/repository';
-import { site } from '@/lib/site';
+import { productNotes, site } from '@/lib/site';
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -98,7 +98,7 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
 
               {product.description && <p className="text-neutral-800 leading-relaxed whitespace-pre-line mt-8 mb-6">{product.description}</p>}
 
-              <ul className="flex flex-col gap-2.5 mb-8">
+              <ul className="flex flex-col gap-2.5 mb-8 empty:hidden">
                 {product.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-[14px]">
                     <Check className="w-5 h-5 shrink-0 mt-0.5 text-neutral-900" /> {f}
@@ -106,14 +106,32 @@ async function ProductPageContent({ params }: { params: PageProps<'/magaza/[slug
                 ))}
               </ul>
 
-              <dl className="glass-light rounded-3xl p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-                {product.specs.map((s) => (
-                  <div key={s.label}>
-                    <dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">{s.label}</dt>
-                    <dd className="font-semibold text-[14px]">{s.value}</dd>
-                  </div>
-                ))}
-              </dl>
+              <div className="glass-light rounded-3xl p-5 sm:p-6">
+                {(product.specs.length > 0 || product.code) && (
+                  <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pb-5 mb-5 border-b border-black/10">
+                    {product.code && (
+                      <div>
+                        <dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">Məhsul kodu</dt>
+                        <dd className="font-semibold text-[14px]">{product.code}</dd>
+                      </div>
+                    )}
+                    {product.specs.map((s) => (
+                      <div key={s.label}>
+                        <dt className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-1">{s.label}</dt>
+                        <dd className="font-semibold text-[14px]">{s.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+                {/* Bütün məhsullarda standart qeydlər — src/lib/site.ts → productNotes */}
+                <ul className="flex flex-col gap-2.5">
+                  {productNotes.map((note) => (
+                    <li key={note} className="flex items-start gap-3 text-[14px] font-semibold">
+                      <BadgeCheck className="w-5 h-5 shrink-0 text-emerald-800" /> {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
                 <Link href="/catdirilma" className="flex items-center gap-3 rounded-2xl bg-white/35 border border-white/50 p-4 text-sm font-semibold hover:bg-white/60 transition-colors">

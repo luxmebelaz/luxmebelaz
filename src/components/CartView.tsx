@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCart, useHydrated } from '@/lib/cart';
 import { formatPrice } from '@/lib/format';
+import { optionLabel } from '@/lib/catalog';
 import { primaryButton, secondaryButton } from '@/components/ui';
 
 export default function CartView() {
@@ -31,7 +32,7 @@ export default function CartView() {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:gap-8 items-start">
       <ul className="flex flex-col gap-4">
         {items.map((item) => (
-          <li key={item.slug} className="glass-light rounded-3xl p-3 sm:p-4 flex gap-3 sm:gap-5">
+          <li key={item.key} className="glass-light rounded-3xl p-3 sm:p-4 flex gap-3 sm:gap-5">
             <Link href={`/magaza/${item.slug}`} className="relative w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-2xl overflow-hidden bg-[#b5aba0]">
               <Image src={item.image} alt={item.name} fill sizes="128px" className="object-cover" />
             </Link>
@@ -39,11 +40,12 @@ export default function CartView() {
               <div className="flex justify-between gap-3">
                 <div className="min-w-0">
                   <Link href={`/magaza/${item.slug}`} className="font-bold text-base sm:text-lg leading-tight hover:underline">{item.name}</Link>
+                  {(item.color || item.size) && <p className="text-xs text-neutral-700 mt-1">{optionLabel(item)}</p>}
                   <p className="text-sm text-neutral-700 mt-1">{formatPrice(item.price)}</p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => remove(item.slug)}
+                  onClick={() => remove(item.key)}
                   aria-label={`${item.name} məhsulunu sil`}
                   className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center hover:bg-black/10 transition-colors"
                 >
@@ -52,11 +54,11 @@ export default function CartView() {
               </div>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center h-10 rounded-full border border-black/25 bg-white/40">
-                  <button type="button" aria-label="Sayı azalt" onClick={() => setQty(item.slug, item.qty - 1)} className="w-10 h-full flex items-center justify-center hover:bg-black/5 rounded-l-full">
+                  <button type="button" aria-label="Sayı azalt" onClick={() => setQty(item.key, item.qty - 1)} className="w-10 h-full flex items-center justify-center hover:bg-black/5 rounded-l-full">
                     <Minus className="w-3.5 h-3.5" />
                   </button>
                   <span className="w-8 text-center text-sm font-semibold">{item.qty}</span>
-                  <button type="button" aria-label="Sayı artır" onClick={() => setQty(item.slug, item.qty + 1)} className="w-10 h-full flex items-center justify-center hover:bg-black/5 rounded-r-full">
+                  <button type="button" aria-label="Sayı artır" onClick={() => setQty(item.key, item.qty + 1)} className="w-10 h-full flex items-center justify-center hover:bg-black/5 rounded-r-full">
                     <Plus className="w-3.5 h-3.5" />
                   </button>
                 </div>

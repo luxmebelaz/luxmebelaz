@@ -8,6 +8,7 @@ import { useLenis } from 'lenis/react';
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { useCart } from '@/lib/cart';
 import { formatPrice } from '@/lib/format';
+import { optionLabel } from '@/lib/catalog';
 import { panels, usePanel } from '@/lib/ui';
 import { primaryButton, secondaryButton } from '@/components/ui';
 
@@ -75,22 +76,23 @@ export default function CartDrawer() {
               <>
                 <ul className="flex-1 overflow-y-auto overscroll-contain px-5 sm:px-6 py-4 flex flex-col gap-4">
                   {items.map((item) => (
-                    <li key={item.slug} className="flex gap-3">
+                    <li key={item.key} className="flex gap-3">
                       <Link href={`/magaza/${item.slug}`} onClick={panels.close} className="relative w-20 h-20 shrink-0 rounded-2xl overflow-hidden bg-[#b5aba0]">
                         <Image src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
                       </Link>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-2">
                           <Link href={`/magaza/${item.slug}`} onClick={panels.close} className="font-bold text-[14px] leading-tight hover:underline">{item.name}</Link>
-                          <button type="button" onClick={() => remove(item.slug)} aria-label={`${item.name} məhsulunu sil`} className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center hover:bg-black/10">
+                          <button type="button" onClick={() => remove(item.key)} aria-label={`${item.name} məhsulunu sil`} className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center hover:bg-black/10">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
+                        {(item.color || item.size) && <p className="text-xs text-neutral-700 mt-0.5">{optionLabel(item)}</p>}
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center h-9 rounded-full border border-black/25 bg-white/40">
-                            <button type="button" aria-label="Sayı azalt" onClick={() => setQty(item.slug, item.qty - 1)} className="w-9 h-full flex items-center justify-center hover:bg-black/5 rounded-l-full"><Minus className="w-3.5 h-3.5" /></button>
+                            <button type="button" aria-label="Sayı azalt" onClick={() => setQty(item.key, item.qty - 1)} className="w-9 h-full flex items-center justify-center hover:bg-black/5 rounded-l-full"><Minus className="w-3.5 h-3.5" /></button>
                             <span className="w-7 text-center text-sm font-semibold">{item.qty}</span>
-                            <button type="button" aria-label="Sayı artır" onClick={() => setQty(item.slug, item.qty + 1)} className="w-9 h-full flex items-center justify-center hover:bg-black/5 rounded-r-full"><Plus className="w-3.5 h-3.5" /></button>
+                            <button type="button" aria-label="Sayı artır" onClick={() => setQty(item.key, item.qty + 1)} className="w-9 h-full flex items-center justify-center hover:bg-black/5 rounded-r-full"><Plus className="w-3.5 h-3.5" /></button>
                           </div>
                           <p className="font-extrabold">{formatPrice(item.price * item.qty)}</p>
                         </div>

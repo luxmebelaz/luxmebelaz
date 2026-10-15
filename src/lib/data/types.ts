@@ -6,8 +6,11 @@ export type Category = {
   description: string;
 };
 
+export type ProductColor = { name: string; hex?: string };
+
 export type Product = {
   slug: string;
+  code: string; // 6 rəqəmli məhsul kodu
   name: string;
   category: string; // Category.slug
   price: number; // AZN
@@ -18,6 +21,8 @@ export type Product = {
   imageAlt: string;
   features: string[];
   specs: { label: string; value: string }[];
+  sizes: string[]; // istəyə bağlı ölçü seçimləri
+  colors: ProductColor[]; // istəyə bağlı rəng seçimləri
   inStock: boolean;
   featured: boolean; // ana səhifə — "Məhsullarımız" bölməsi
   isNew: boolean; // ana səhifə — "Yeni gələnlər" bölməsi
